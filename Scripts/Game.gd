@@ -41,34 +41,19 @@ func _input(event):
 		if !event.pressed: return
 		
 		if event.button_index == 1:
+			
+			# Place the block
 			if current_block == null: return
 			
-			var rotated_data = current_block.data
-			var rotated_center = current_block.center + Vector2(1,1)
+			if cursor.is_moving(): cursor.force_complete_tweens()
 			
-			if cursor.target_rot % 360 == 0:
-				pass
-			elif cursor.target_rot % 360 == 90:
-				pass
-			elif cursor.target_rot % 360 == 180:
-				pass
-			elif cursor.target_rot % 360 == 270:
-				pass
-				
-			for row in len(rotated_data):
-					for col in len(rotated_data[row]):
-						if rotated_data[row][col] == 1:
-							var array_coord = (Vector2(col,row) + Vector2(1,1))
-							print(array_coord)
-							print(rotated_center)
-							print(array_coord - rotated_center)
-							print()
-							var tile_pos = board.world_to_map(cursor.position) + (array_coord - rotated_center)
-							set_tile(tile_pos)
-							
-			cursor.set_target_rot(0)
+			for pos in current_block.get_children_global_pos():
+				set_tile(board.world_to_map(pos))
+			
 			
 		if event.button_index == 2:
+			
+			# Rotate the block
 			cursor.set_target_rot(cursor.rotation_degrees + 90)
 			
 		
@@ -76,14 +61,3 @@ func _input(event):
 func set_tile(tilemap_position: Vector2):
 	board.set_cellv(tilemap_position, 0)
 
-
-# Rotates array 90 degrees clockwise, assuming that array is a full rectangle (all rows same size)
-# https://godotengine.org/qa/92697/how-can-i-rotate-an-array-of-array
-func rotate_array(arr) -> Array:
-	var new_arr = []
-	for i in range(len(arr[0])):
-		var row = []
-		for j in range(len(arr)):
-			row.append(arr[len(arr) - j - 1][i])
-		new_arr.append(row)
-	return new_arr

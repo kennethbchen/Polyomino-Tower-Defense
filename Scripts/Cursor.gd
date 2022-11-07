@@ -35,5 +35,17 @@ func set_target_rot(new_rot):
 	
 	rot_tween.interpolate_property(self, "rotation_degrees", rotation_degrees, target_rot, 0.1, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	rot_tween.start()
+
+func is_moving():
+	if pos_tween.is_active() or rot_tween.is_active(): 
+		return true
+	else:
+		return false
+		
+func force_complete_tweens():
+	pos_tween.stop_all()
+	rot_tween.stop_all()
 	
+	position = target_pos
+	rotation_degrees = target_rot
 
