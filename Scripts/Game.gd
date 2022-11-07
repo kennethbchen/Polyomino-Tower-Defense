@@ -1,5 +1,8 @@
 extends Node2D
 
+var cell_size = 32
+
+var cell_offset = Vector2(cell_size / 2, cell_size / 2)
 
 var root
 
@@ -25,7 +28,14 @@ func _input(event):
 	
 	if event is InputEventMouseMotion:
 		var cursor_pos = board.to_global(board.map_to_world(board.world_to_map(camera.get_local_mouse_position())))
-		cursor.set_target(cursor_pos)
-		print(cursor_pos)
+		cursor.set_target_pos(cursor_pos + cell_offset)
+		#print(cursor_pos + cell_offset)
+		
+	if event is InputEventMouseButton:
+		
+		if !event.pressed: return
+		
+		if event.button_index == 2:
+			cursor.set_target_rot(cursor.rotation_degrees + 90)
 		
 	
