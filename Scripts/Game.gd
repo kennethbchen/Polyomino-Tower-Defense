@@ -32,9 +32,9 @@ func _process(delta):
 func _input(event):
 	
 	if event is InputEventMouseMotion:
+		# Move the cursor
 		var cursor_pos = board.to_global(board.map_to_world(board.world_to_map(camera.get_local_mouse_position())))
 		cursor.set_target_pos(cursor_pos + cell_offset)
-		#print(cursor_pos + cell_offset)
 		
 	if event is InputEventMouseButton:
 		
@@ -43,8 +43,17 @@ func _input(event):
 		if event.button_index == 1:
 			
 			# Place the block
+			# The global position of the tiles in the current_block (block.gd) are
+			# used to calculate the placed tiles positions with board.world_to_map()
+			# So, since the current block follows the cursor, what you see is basically what you get
+			# except for quantizing the positions to fit on the grid
 			if current_block == null: return
 			
+			# TODO, verify that there aren't blocks already there
+			
+			# Animation Cancelling:
+			# Make sure that the cursor is not tweening
+			# If they are, instantly finish any animation
 			if cursor.is_moving(): cursor.force_complete_tweens()
 			
 			for pos in current_block.get_children_global_pos():
@@ -54,7 +63,7 @@ func _input(event):
 		if event.button_index == 2:
 			
 			# Rotate the block
-			cursor.set_target_rot(cursor.rotation_degrees + 90)
+			cursor.rotate_90()
 			
 		
 		
