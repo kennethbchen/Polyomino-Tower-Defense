@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="Polyomino Tower Defence"
+config/name="Polyomino Tower Defense"
 run/main_scene="res://Game.tscn"
 
 [display]
