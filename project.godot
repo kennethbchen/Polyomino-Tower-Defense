@@ -11,6 +11,12 @@ config_version=4
 [application]
 
 config/name="Polyomino Tower Defence"
+run/main_scene="res://Game.tscn"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [gui]
 
