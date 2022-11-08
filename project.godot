@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Util",
+"language": "GDScript",
+"path": "res://Scripts/Util.gd"
+} ]
+_global_script_class_icons={
+"Util": ""
+}
+
 [application]
 
 config/name="Polyomino Tower Defense"
