@@ -21,11 +21,10 @@ script = ExtResource( 5 )
 current = true
 
 [node name="Cursor" type="Node2D" parent="."]
+position = Vector2( 0, -288 )
 z_index = 1
 script = ExtResource( 4 )
 
 [node name="PosTween" type="Tween" parent="Cursor"]
 
 [node name="RotTween" type="Tween" parent="Cursor"]
-
-[node name="Enemy" type="NavigationAgent2D" parent="."]

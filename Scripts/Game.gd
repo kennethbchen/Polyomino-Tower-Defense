@@ -11,14 +11,16 @@ onready var camera = $Camera2D
 onready var cursor = $Cursor
 
 
-var enemy_start = Vector2(4, -2)
-var enemy_end = Vector2(4, 17)
+var enemy_start = Vector2(0, -288)
+var enemy_end = Vector2(0, 288)
 
 onready var board = $Board
 
 var current_block: Node2D
 var current_tower: Resource
+var temp_enemy: Resource
 
+var nav_map_rid
 
 func _ready():
 	
@@ -26,9 +28,12 @@ func _ready():
 	
 	current_block = load("res://Blocks/T-Piece.tscn").instance()
 	current_tower = load("res://Scenes/Tower.tscn")
+	temp_enemy = load("res://Scenes/Enemy.tscn")
+	
+	nav_map_rid = Navigation2DServer.map_create()
+	Navigation2DServer.map_set_active(nav_map_rid, true)
 	
 	cursor.add_child(current_block)
-
 
 
 
@@ -66,7 +71,7 @@ func _input(event):
 				cursor.shake_effect()
 				return
 			
-			# TODO, verify that there aren't blocks already there
+			# TODO, There's a bug where you can bypass checks if you go fast
 			# Verify that individual block squares are valid
 			for pos in current_block.get_children_global_pos():
 				if !board.is_in_board(board.global_to_tile(pos)) or !board.is_free_space(board.world_to_map(board.to_local(pos))): 
@@ -87,6 +92,11 @@ func _input(event):
 				new_tower.init(board.quantize_position(pos) + cell_offset, board)
 				
 				
+				
+			Navigation2DServer.map_force_update(nav_map_rid)
+			
+				
+				
 			
 			
 		if event.button_index == 2:
@@ -94,7 +104,13 @@ func _input(event):
 			# Rotate the block
 			cursor.rotate_90()
 			
-			
+	# Spawn Enemy for Debug
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_SPACE:
+			var new_enemy = temp_enemy.instance()
+			add_child(new_enemy)
+			new_enemy.init(enemy_start, enemy_end)
+
 
 func get_mouse_pos():
 	return camera.get_global_mouse_position()

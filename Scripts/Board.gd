@@ -2,7 +2,6 @@ extends TileMap
 
 
 func _on_tower_created(global_pos):
-	print("tower created")
 	# Could be built in function
 	
 	# Set the navigation tile in the right place for navigation
