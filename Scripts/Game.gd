@@ -10,6 +10,10 @@ onready var camera = $Camera2D
 
 onready var cursor = $Cursor
 
+
+var enemy_start = Vector2(4, -2)
+var enemy_end = Vector2(4, 17)
+
 onready var board = $Board
 
 var current_block: Node2D
@@ -24,6 +28,7 @@ func _ready():
 	current_tower = load("res://Scenes/Tower.tscn")
 	
 	cursor.add_child(current_block)
+
 
 
 
