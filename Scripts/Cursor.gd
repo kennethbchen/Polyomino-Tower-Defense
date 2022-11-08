@@ -17,8 +17,6 @@ onready var rot_tween = $RotTween
 func _ready():
 	pass
 
-
-
 func _process(delta):
 	pass
 	
@@ -27,7 +25,7 @@ func set_target_pos(new_pos : Vector2):
 	if target_pos == new_pos: return
 	
 	target_pos = new_pos
-	pos_tween.interpolate_property(self, "position", position, target_pos, 0.25, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	pos_tween.interpolate_property(self, "position", position, target_pos, 0.1, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	pos_tween.start()
 	
 func _set_target_rot(new_rot: int):
@@ -40,14 +38,26 @@ func _set_target_rot(new_rot: int):
 	rot_tween.interpolate_property(self, "rotation_degrees", rotation_degrees, target_rot, 0.1, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	rot_tween.start()
 
+func shake_effect():
+	var duration = 0.2
+	
+	if is_moving(): force_complete_tweens()
+	
+	var orig_rot = target_rot
+	rot_tween.interpolate_property(self, "rotation_degrees", rotation_degrees, orig_rot + 15, duration, Tween.TRANS_BACK, Tween.EASE_OUT)
+	rot_tween.interpolate_property(self, "rotation_degrees", rotation_degrees, orig_rot - 15, duration, Tween.TRANS_BACK, Tween.EASE_OUT, duration)
+	rot_tween.interpolate_property(self, "rotation_degrees", rotation_degrees, orig_rot, duration, Tween.TRANS_BACK, Tween.EASE_OUT, duration * 2)
+	
+	#pos_tween.start()
+	rot_tween.start()
+	
 func rotate_90():
 	
 	# Animation Cancelling:
 	# If the cursor is already rotating, then instantly finish that rotation and start a new one
 	if rot_tween.is_active():
-		rot_tween.stop_all()
+		rot_tween.remove_all()
 		rotation_degrees = rotations[rotation_index]
-		pass
 		
 		
 	rotation_index = (rotation_index + 1) % len(rotations)
@@ -70,8 +80,8 @@ func is_moving():
 		return false
 		
 func force_complete_tweens():
-	pos_tween.stop_all()
-	rot_tween.stop_all()
+	pos_tween.remove_all()
+	rot_tween.remove_all()
 	
 	position = target_pos
 	rotation_degrees = target_rot
