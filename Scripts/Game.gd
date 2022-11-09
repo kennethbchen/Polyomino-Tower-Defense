@@ -11,8 +11,8 @@ onready var camera = $Camera2D
 onready var cursor = $Cursor
 
 
-var enemy_start = Vector2(0, -288)
-var enemy_end = Vector2(0, 288)
+var enemy_start = Vector2(0, -352)
+var enemy_end = Vector2(0, 352)
 
 onready var board = $Board
 
@@ -20,7 +20,6 @@ var current_block: Node2D
 var current_tower: Resource
 var temp_enemy: Resource
 
-var nav_map_rid
 
 func _ready():
 	
@@ -29,9 +28,6 @@ func _ready():
 	current_block = load("res://Blocks/T-Piece.tscn").instance()
 	current_tower = load("res://Scenes/Tower.tscn")
 	temp_enemy = load("res://Scenes/Enemy.tscn")
-	
-	nav_map_rid = Navigation2DServer.map_create()
-	Navigation2DServer.map_set_active(nav_map_rid, true)
 	
 	cursor.add_child(current_block)
 
@@ -92,8 +88,6 @@ func _input(event):
 				new_tower.init(board.quantize_position(pos) + cell_offset, board)
 				
 				
-				
-			Navigation2DServer.map_force_update(nav_map_rid)
 			
 				
 				
