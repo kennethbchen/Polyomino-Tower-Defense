@@ -30,8 +30,6 @@ func _ready():
 	temp_enemy = load("res://Scenes/Enemy.tscn")
 	
 	cursor.add_child(current_block)
-	
-	print(board.map_to_world(Vector2(0,0)) - board.position)
 
 
 
