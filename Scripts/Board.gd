@@ -21,7 +21,8 @@ func is_in_board(tilemap_coordinate: Vector2):
 		return true
 	else:
 		return false
-		
+
+
 func is_free_space(tilemap_coord: Vector2):
 	if is_in_board(tilemap_coord) and get_cellv(tilemap_coord) == Util.NAV_ALLOWED_TILE:
 		return true

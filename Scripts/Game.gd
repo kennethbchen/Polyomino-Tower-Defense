@@ -30,6 +30,8 @@ func _ready():
 	temp_enemy = load("res://Scenes/Enemy.tscn")
 	
 	cursor.add_child(current_block)
+	
+	print(board.map_to_world(Vector2(0,0)) - board.position)
 
 
 
@@ -69,11 +71,21 @@ func _input(event):
 			
 			# TODO, There's a bug where you can bypass checks if you go fast
 			# Verify that individual block squares are valid
+			
+			
 			for pos in current_block.get_children_global_pos():
-				if !board.is_in_board(board.global_to_tile(pos)) or !board.is_free_space(board.world_to_map(board.to_local(pos))): 
+				if !board.is_in_board(board.global_to_tile(pos)) or !board.is_free_space(board.global_to_tile(pos)): 
 					cursor.shake_effect()
 					return
-				
+			
+			# Verify that placing this block does not cut off the path from start to finish
+			var proposed_block_positions = []
+			for pos in current_block.get_children_global_pos():
+				proposed_block_positions.append(board.global_to_tile(pos))
+			
+			if !is_traversable(board.global_to_tile(enemy_start), board.global_to_tile(enemy_end), proposed_block_positions):
+				cursor.shake_effect()
+				return
 				
 			
 			# Animation Cancelling:
@@ -117,4 +129,45 @@ func get_quantized_cursor_pos():
 func get_selected_tile():
 	return board.global_to_tile(get_mouse_pos())
 
+func is_walkable_tile(tilemap_coordinate: Vector2):
+	return board.get_cellv(tilemap_coordinate) == Util.NAV_ALLOWED_TILE
+	
+
+
+var relative_neighbors = [Vector2(0, -1), Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1)] # Down, left, right, up
+
+# Uses Depth First Search to determine if there is a valid path between start and end tilemap coordinates 
+# on the board considering the list of additional proposed_blocks
+
+# Navigation2DServer is not used because it seems difficult to test for traversable paths while
+# agents are also using it
+
+# Built-in Astar is not used because the edges between nodes (tiles) is already naturally
+# encoded and maintained by the board's tile data and would have to be re-computed/maintained for the Astar graph
+func is_traversable(tilemap_start: Vector2, tilemap_end: Vector2, proposed_blocks: Array):
+	
+	var to_visit = [] # Array of tilemap positions (V2s)
+	var visited = {} # Dictionary of tilemap postitions (V2s)
+	
+	to_visit.push_front(tilemap_start)
+	
+	while !to_visit.empty():
+		var node = to_visit.pop_front()
+
+		if visited.has(node):
+			continue # Ignore already visited nodes
+		
+		visited[node] = true # Mark this node as visited
+		
+		
+		if node == tilemap_end: return true # Path exists
+		else:
+			# Add valid neighbors. Proposted block positions are ignored
+			for rel_pos in relative_neighbors:
+				var pos = node + rel_pos
+
+				if is_walkable_tile(pos) and proposed_blocks.find(pos) == -1:
+					to_visit.push_front(pos)
+
+	return false
 
