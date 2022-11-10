@@ -11,8 +11,8 @@ onready var camera = $Camera2D
 onready var cursor = $Cursor
 
 
-var enemy_start = Vector2(0, -352)
-var enemy_end = Vector2(0, 352)
+var enemy_start = Vector2(1024, -352)
+var enemy_end = Vector2(1024, 352)
 
 onready var board = $Board
 
