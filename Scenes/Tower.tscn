@@ -7,7 +7,7 @@
 [ext_resource path="res://Sprites/TowerCannon.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 64.0
+radius = 80.0
 
 [node name="Tower" type="Node2D"]
 script = ExtResource( 2 )
@@ -29,7 +29,7 @@ script = ExtResource( 3 )
 aim_speed = 20.0
 
 [node name="Sprite" type="Sprite" parent="AimSystem"]
-position = Vector2( 15, 0 )
+position = Vector2( 14, 0 )
 texture = ExtResource( 5 )
 
 [node name="Timer" type="Timer" parent="."]

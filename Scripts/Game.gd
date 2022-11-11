@@ -17,6 +17,8 @@ var enemy_end = Vector2(1024, 352)
 
 onready var board = $BoardData
 
+onready var block_queue = $BlockQueueHandler
+
 var current_block: Node2D
 var current_tower: Resource
 var temp_enemy: Resource
@@ -26,8 +28,12 @@ func _ready():
 	
 	root = get_tree().root
 	
-	current_block = load("res://Blocks/T-Piece.tscn").instance()
+	current_block = load("res://Scenes/Blocks/OPiece.tscn").instance()
+	
 	current_tower = load("res://Scenes/Tower.tscn")
+	
+	current_block.init(current_tower)
+	
 	temp_enemy = load("res://Scenes/Enemy.tscn")
 	
 	cursor.add_child(current_block)

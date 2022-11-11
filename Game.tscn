@@ -1,12 +1,24 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/BlockQueueHandler.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/Cursor.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Board.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Blocks/TPiece.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Blocks/IPiece.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Blocks/SPiece.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Blocks/OPiece.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Blocks/LPiece.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Blocks/ZPiece.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Blocks/JPiece.tscn" type="PackedScene" id=12]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="BlockQueueHandler" type="Node" parent="."]
+script = ExtResource( 3 )
+blocks = [ ExtResource( 7 ), ExtResource( 12 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 11 ) ]
 
 [node name="BoardCosmetic" type="TileMap" parent="."]
 position = Vector2( 864, -256 )

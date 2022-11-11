@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/BlockBase.tscn" type="PackedScene" id=1]
+
+[node name="IPiece" instance=ExtResource( 1 )]
+
+[node name="Block1" type="Node2D" parent="." index="0"]
+position = Vector2( 0, -32 )
+
+[node name="Block2" type="Node2D" parent="." index="1"]
+
+[node name="Block3" type="Node2D" parent="." index="2"]
+position = Vector2( 0, 32 )
+
+[node name="Block4" type="Node2D" parent="." index="3"]
+position = Vector2( 0, 64 )
