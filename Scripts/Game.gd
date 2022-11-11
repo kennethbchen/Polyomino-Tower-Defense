@@ -28,21 +28,30 @@ func _ready():
 	
 	root = get_tree().root
 	
-	current_block = load("res://Scenes/Blocks/OPiece.tscn").instance()
 	
 	current_tower = load("res://Scenes/Tower.tscn")
 	
-	current_block.init(current_tower)
+	current_block = _get_next_block()
 	
 	temp_enemy = load("res://Scenes/Enemy.tscn")
-	
-	cursor.add_child(current_block)
+
 
 
 
 func _process(delta):
 	pass
+
+func _get_next_block():
 	
+	# Clear the existing current block
+	if current_block != null:
+		current_block.queue_free()
+		
+	var output = block_queue.pop_next_block().instance()
+	output.init(current_tower)
+	cursor.add_child(output)
+	return output
+
 func _input(event):
 	
 	if event is InputEventMouseMotion:
@@ -104,7 +113,7 @@ func _input(event):
 				add_child(new_tower)
 				new_tower.init(board.quantize_position(pos) + cell_offset, board)
 				
-				
+			current_block = _get_next_block()
 			
 				
 				
