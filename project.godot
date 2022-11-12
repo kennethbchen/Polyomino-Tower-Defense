@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Control",
+"class": "QueueDisplay",
+"language": "GDScript",
+"path": "res://QueueDisplay.gd"
+}, {
 "base": "Node",
 "class": "Util",
 "language": "GDScript",
 "path": "res://Scripts/Util.gd"
 } ]
 _global_script_class_icons={
+"QueueDisplay": "",
 "Util": ""
 }
 

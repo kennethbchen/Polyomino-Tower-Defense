@@ -5,6 +5,7 @@ export(Array, Resource) var blocks
 
 var queue = [] # Array of Packed Scenes
 
+signal queue_ready()
 signal queue_changed(block_queue)
 
 func _ready():

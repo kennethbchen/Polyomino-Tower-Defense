@@ -1,5 +1,7 @@
 extends Control
 
+class_name QueueDisplay
+
 export var queue_position = 0
 
 onready var preview_sprite = $PreviewImage
