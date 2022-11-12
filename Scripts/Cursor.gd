@@ -13,12 +13,6 @@ var target_rot: int = 0 # In Degrees
 
 onready var pos_tween = $PosTween
 onready var rot_tween = $RotTween
-
-func _ready():
-	pass
-
-func _process(delta):
-	pass
 	
 func set_target_pos(new_pos : Vector2):
 	
@@ -30,7 +24,8 @@ func set_target_pos(new_pos : Vector2):
 	
 func _set_target_rot(new_rot: int):
 	
-	if target_rot == new_rot: 
+	if target_rot == new_rot:
+		print(target_rot, " ", new_rot)
 		return
 		
 	target_rot = new_rot
@@ -52,14 +47,15 @@ func shake_effect():
 	rot_tween.start()
 	
 func rotate_90():
-	
+
 	# Animation Cancelling:
 	# If the cursor is already rotating, then instantly finish that rotation and start a new one
 	if rot_tween.is_active():
 		rot_tween.remove_all()
 		rotation_degrees = rotations[rotation_index]
 		
-		
+
+	# Calculate new rotation index
 	rotation_index = (rotation_index + 1) % len(rotations)
 	
 	# 450 means the current rotation is 360 and the next is 450
@@ -68,10 +64,16 @@ func rotate_90():
 		rotation_index = 1 # Next target is 90
 		rotation_degrees = 0
 		
+
 	
-		
 	_set_target_rot(rotations[rotation_index])
 	
+
+func reset_rotation():
+	rotation_index = 0
+	rotation_degrees = 0
+	target_rot = 0
+
 	
 func is_moving():
 	if pos_tween.is_active() or rot_tween.is_active(): 

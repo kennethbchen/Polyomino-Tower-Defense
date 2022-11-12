@@ -28,7 +28,6 @@ func _ready():
 	
 	root = get_tree().root
 	
-	
 	current_tower = load("res://Scenes/Tower.tscn")
 	
 	current_block = _get_next_block()
@@ -113,7 +112,8 @@ func _input(event):
 				var new_tower = current_tower.instance()
 				add_child(new_tower)
 				new_tower.init(board.quantize_position(pos) + cell_offset, board)
-				
+			
+			cursor.reset_rotation()
 			current_block = _get_next_block()
 			
 			
