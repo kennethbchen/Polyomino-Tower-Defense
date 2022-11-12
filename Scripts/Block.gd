@@ -2,18 +2,19 @@ extends Node2D
 
 var tower: Resource
 
-# Blocks do not come with visuals by default so the selected tower can override visuals
-# For now, just made each block with temp art
-var temp_visual = load("res://icon.svg")
+export var preview_image: StreamTexture
+
+export var block_texture: StreamTexture = load("res://Sprites/Blocks/Block.png")
 
 
 func init(tower_res: Resource):
 	tower = tower_res
 	
-	# Replace each block placeholder with tower sprite
+	# Each child is a block placeholder
+	# Put a sprite where each placeholder is
 	for child in self.get_children():
 		var new_sprite = Sprite.new()
-		new_sprite.texture = temp_visual
+		new_sprite.texture = block_texture
 		child.add_child(new_sprite)
 
 

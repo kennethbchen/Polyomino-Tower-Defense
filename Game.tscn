@@ -9,9 +9,9 @@
 [ext_resource path="res://Scenes/Blocks/IPiece.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Blocks/SPiece.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Blocks/OPiece.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Blocks/LPiece.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Blocks/JPiece.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Blocks/ZPiece.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Blocks/JPiece.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Blocks/LPiece.tscn" type="PackedScene" id=12]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
@@ -53,3 +53,34 @@ script = ExtResource( 4 )
 [node name="PosTween" type="Tween" parent="Cursor"]
 
 [node name="RotTween" type="Tween" parent="Cursor"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -272.0
+margin_bottom = 296.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -272.0
+margin_top = -148.0
+margin_bottom = 148.0
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+margin_right = 272.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 150.0
+margin_right = 272.0
+margin_bottom = 296.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
