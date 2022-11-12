@@ -46,8 +46,9 @@ func _get_next_block():
 	# Clear the existing current block
 	if current_block != null:
 		current_block.queue_free()
+		block_queue.pop_next_block()
 		
-	var output = block_queue.pop_next_block().instance()
+	var output = block_queue.peek_next_block().instance()
 	output.init(current_tower)
 	cursor.add_child(output)
 	return output
@@ -114,6 +115,7 @@ func _input(event):
 				new_tower.init(board.quantize_position(pos) + cell_offset, board)
 				
 			current_block = _get_next_block()
+			
 			
 				
 				

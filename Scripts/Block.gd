@@ -2,9 +2,11 @@ extends Node2D
 
 var tower: Resource
 
-export var preview_image: StreamTexture
+export var block_texture_path: Resource
 
-export var block_texture: StreamTexture = load("res://Sprites/Blocks/Block.png")
+export var preview_image: Texture
+
+export var block_texture: Texture = load("res://Sprites/Blocks/Block.png")
 
 
 func init(tower_res: Resource):

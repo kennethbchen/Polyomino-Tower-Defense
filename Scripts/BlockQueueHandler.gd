@@ -5,11 +5,15 @@ export(Array, Resource) var blocks
 
 var queue = [] # Array of Packed Scenes
 
+signal queue_changed(block_queue)
+
 func _ready():
 	randomize()
 	
 	queue.append_array(_generate_bag())
 	queue.append_array(_generate_bag())
+	
+	refresh_displays()
 	
 	
 func pop_next_block():
@@ -17,11 +21,12 @@ func pop_next_block():
 	
 	if queue.size() <= blocks.size():
 		queue.append_array(_generate_bag())
-		pass
+		
+	refresh_displays()
 	
 	return output
 	
-func peep_next_block():
+func peek_next_block():
 	return queue[0]
 
 
@@ -32,4 +37,6 @@ func _generate_bag() -> Array:
 	var output = blocks.duplicate()
 	output.shuffle()
 	return output
-	
+
+func refresh_displays():
+	emit_signal("queue_changed", queue)
