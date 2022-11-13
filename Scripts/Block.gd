@@ -19,7 +19,6 @@ func init(tower_res: Resource):
 		new_sprite.texture = block_texture
 		child.add_child(new_sprite)
 
-
 func get_children_global_pos():
 	var output = []
 	for i in self.get_children():
