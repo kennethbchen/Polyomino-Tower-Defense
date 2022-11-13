@@ -32,10 +32,10 @@ margin_bottom = 14.0
 script = ExtResource( 14 )
 queue_handler_path = NodePath("../../BlockQueueHandler")
 
-[node name="NextLabel" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
+[node name="CurrentLabel" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
 margin_right = 169.0
 margin_bottom = 14.0
-text = "Next:"
+text = "Current:"
 
 [node name="QueueDisplay" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
@@ -43,12 +43,12 @@ anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 169.0
 margin_bottom = 81.0
-queue_position = 1
 
-[node name="Spacer" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
+[node name="NextLabel" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
 margin_top = 85.0
 margin_right = 169.0
 margin_bottom = 99.0
+text = "Next:"
 
 [node name="QueueDisplay2" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
@@ -56,7 +56,7 @@ anchor_bottom = 0.0
 margin_top = 103.0
 margin_right = 169.0
 margin_bottom = 167.0
-queue_position = 2
+queue_position = 1
 
 [node name="QueueDisplay3" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
@@ -64,7 +64,7 @@ anchor_bottom = 0.0
 margin_top = 171.0
 margin_right = 169.0
 margin_bottom = 234.0
-queue_position = 3
+queue_position = 2
 
 [node name="QueueDisplay4" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
@@ -72,7 +72,7 @@ anchor_bottom = 0.0
 margin_top = 238.0
 margin_right = 169.0
 margin_bottom = 302.0
-queue_position = 4
+queue_position = 3
 
 [node name="BlockQueueHandler" type="Node" parent="."]
 script = ExtResource( 3 )
