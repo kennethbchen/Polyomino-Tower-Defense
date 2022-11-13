@@ -30,13 +30,18 @@ func pop_next_block():
 func peek_next_block():
 	return queue[0]
 
+func push_front(block):
+	queue.push_front(block)
+	refresh_displays()
 
 # A bag is a set of all possible blocks in a random order
 # Returns an array of resources (packed scenes)
 func _generate_bag() -> Array:
-	
-	var output = blocks.duplicate()
-	output.shuffle()
+	var packed_scenes = blocks.duplicate()
+	packed_scenes.shuffle()
+	var output = []
+	for scene in packed_scenes:
+		output.append(scene.instance())
 	return output
 
 func refresh_displays():

@@ -25,7 +25,6 @@ func set_target_pos(new_pos : Vector2):
 func _set_target_rot(new_rot: int):
 	
 	if target_rot == new_rot:
-		print(target_rot, " ", new_rot)
 		return
 		
 	target_rot = new_rot

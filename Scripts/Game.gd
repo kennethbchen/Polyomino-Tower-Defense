@@ -21,11 +21,10 @@ var enemy_end = Vector2(1024, 352)
 
 
 var selected_block: Node2D
+var held_block: Node2D
 var selected_tower: Resource
 
 
-enum CursorState {FREE = 1, SELECTED_BLOCK = 2}
-var cur_cursor_state = CursorState.FREE
 
 func _ready():
 	
@@ -37,16 +36,20 @@ func _ready():
 
 func _get_next_block():
 		
-	var output = block_queue.peek_next_block().instance()
+	var output = block_queue.pop_next_block()
 	output.init(selected_tower)
 	cursor.add_child(output)
 	return output
 
+# Un-selects the currently selected block
+# Does not do anything to the selected_block node itself
+# It has to be dealt with separately
 func _clear_selection():
 	
 	cursor.reset_rotation()
-	selected_block.queue_free()
-	cur_cursor_state = CursorState.FREE
+	cursor.remove_child(selected_block)
+	selected_block = null
+
 
 func _input(event):
 	
@@ -66,12 +69,11 @@ func _input(event):
 		
 		if !event.pressed: return
 		
-		match(cur_cursor_state):
-			CursorState.FREE:
-				pass
-			CursorState.SELECTED_BLOCK:
-		
-				if event.button_index == 1:
+		if selected_block == null:
+			pass
+		else:
+			
+			if event.button_index == 1:
 					
 					if selected_block == null: return
 					
@@ -112,37 +114,58 @@ func _input(event):
 						add_child(new_tower)
 						new_tower.init(board.quantize_position(pos) + cell_offset, board)
 					
-					
-					block_queue.pop_next_block() # We just placed this block
-					
+					# The selected block is no longer needed
+					selected_block.queue_free()
 					_clear_selection()
 					
-				if event.button_index == 2:
-					
-					# Rotate the block
-					cursor.rotate_90()
+			
+			if event.button_index == 2:
+				
+				# Rotate the block
+				cursor.rotate_90()
+				
+				
 			
 	# Debug Stuff
 	if event is InputEventKey:
-		if event.pressed and event.scancode == KEY_SPACE:
+		
+		if !event.pressed: return
+		
+		if event.scancode == KEY_SPACE:
 			var new_enemy = temp_enemy.instance()
 			add_child(new_enemy)
 			new_enemy.init(enemy_start, enemy_end)
 		
 		# Simulate clicking stuff to select blocks
-		if event.pressed and event.scancode == KEY_A:
+		if event.scancode == KEY_A:
 			
-			if cur_cursor_state == CursorState.SELECTED_BLOCK: return
+			# Select from queue
+			if selected_block != null: return
 			
 			selected_block = _get_next_block()
-			cur_cursor_state = CursorState.SELECTED_BLOCK
 		
-		if event.pressed and event.scancode == KEY_S:
+		if event.scancode == KEY_S:
 			
-			if cur_cursor_state == CursorState.FREE: return
-		
+			# Clear Selection and put selected block back in the queue
+			if selected_block == null: return
+			
+			# The selected block goes back on the queue
+			block_queue.push_front(selected_block)
 			_clear_selection()
-
+			
+		
+		if event.scancode == KEY_D:
+			
+			# Hold Block
+			
+			# If no block selected and no block in held slot, don't do anything
+			# If no block selected and there is a block in held slot, select it
+			
+			# If block selected and none in held, unselect block and put in in held
+			# The next block in the queue is popped off
+			
+			# IF block selected and there is in held, swap them
+			pass
 
 func get_mouse_pos():
 	return camera.get_global_mouse_position()
