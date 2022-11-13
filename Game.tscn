@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -14,12 +14,40 @@
 [ext_resource path="res://Scenes/Blocks/LPiece.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/QueueDisplay.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scripts/QueueDisplayContainer.gd" type="Script" id=14]
+[ext_resource path="res://HeldBlockDisplay.gd" type="Script" id=16]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
+
+[node name="HeldDisplay" type="Control" parent="CanvasLayer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 88.0
+margin_top = -108.0
+margin_right = 216.0
+margin_bottom = -12.0
+script = ExtResource( 16 )
+
+[node name="Panel" type="Panel" parent="CanvasLayer/HeldDisplay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ContentContainer" type="VBoxContainer" parent="CanvasLayer/HeldDisplay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HeldLabel" type="Label" parent="CanvasLayer/HeldDisplay/ContentContainer"]
+margin_right = 128.0
+margin_bottom = 14.0
+text = "Held:"
+
+[node name="Display" type="TextureRect" parent="CanvasLayer/HeldDisplay/ContentContainer"]
+margin_top = 18.0
+margin_right = 128.0
+margin_bottom = 18.0
 
 [node name="QueueDisplayContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchor_left = 0.763
@@ -109,3 +137,5 @@ script = ExtResource( 4 )
 [node name="PosTween" type="Tween" parent="Cursor"]
 
 [node name="RotTween" type="Tween" parent="Cursor"]
+
+[connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]

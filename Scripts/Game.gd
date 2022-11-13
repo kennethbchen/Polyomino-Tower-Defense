@@ -20,11 +20,11 @@ var enemy_start = Vector2(1024, -352)
 var enemy_end = Vector2(1024, 352)
 
 
-var selected_block: Node2D
-var held_block: Node2D
+var selected_block: Node2D = null
+var held_block: Node2D = null
 var selected_tower: Resource
 
-
+signal held_block_changed(image)
 
 func _ready():
 	
@@ -37,10 +37,13 @@ func _ready():
 func _get_next_block():
 		
 	var output = block_queue.pop_next_block()
-	output.init(selected_tower)
-	cursor.add_child(output)
 	return output
 
+func _select_block(block):
+	selected_block = block
+	block.init(selected_tower)
+	cursor.add_child(block)
+	pass
 # Un-selects the currently selected block
 # Does not do anything to the selected_block node itself
 # It has to be dealt with separately
@@ -141,8 +144,7 @@ func _input(event):
 			
 			# Select from queue
 			if selected_block != null: return
-			
-			selected_block = _get_next_block()
+			_select_block(_get_next_block())
 		
 		if event.scancode == KEY_S:
 			
@@ -158,14 +160,38 @@ func _input(event):
 			
 			# Hold Block
 			
-			# If no block selected and no block in held slot, don't do anything
-			# If no block selected and there is a block in held slot, select it
+			var block_selected = selected_block != null
+			var block_held = held_block != null
 			
-			# If block selected and none in held, unselect block and put in in held
-			# The next block in the queue is popped off
+			if !block_selected and !block_held: return
 			
-			# IF block selected and there is in held, swap them
-			pass
+			if !block_selected and block_held:
+				
+				# Select the held block
+				
+				_select_block(held_block)
+				held_block = null
+				emit_signal("held_block_changed", null)
+			
+			if block_selected and block_held:
+				# Swap selected and held
+				var temp = selected_block
+				_clear_selection()
+				_select_block(held_block)
+				held_block = temp
+				emit_signal("held_block_changed", held_block.preview_image)
+				
+
+			
+			# Block selected + no held block
+			if block_selected and !block_held:
+				
+				# Put selected block in held
+				held_block = selected_block
+				_clear_selection()
+				emit_signal("held_block_changed", held_block.preview_image)
+			
+			
 
 func get_mouse_pos():
 	return camera.get_global_mouse_position()
