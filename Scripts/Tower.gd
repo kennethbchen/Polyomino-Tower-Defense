@@ -22,7 +22,7 @@ func init(pos, board_node):
 	position = pos
 
 	connect("tower_created", board_node, "_on_tower_created")
-	connect("tower_removed", board_node, "_on_tower_removed")
+	connect("tower_removed", board_node, "_on_tower_destroyed")
 	emit_signal("tower_created", position)
 	
 func _ready():

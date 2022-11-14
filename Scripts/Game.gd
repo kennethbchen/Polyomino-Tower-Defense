@@ -14,6 +14,8 @@ onready var board = $BoardData
 
 onready var block_queue = $BlockQueueHandler
 
+export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
+
 var temp_enemy: Resource
 
 var enemy_start = Vector2(1024, -352)
@@ -35,9 +37,8 @@ func _ready():
 	temp_enemy = load("res://Scenes/Enemy.tscn")
 
 func _get_next_block():
-		
-	var output = block_queue.pop_next_block()
-	return output
+
+	return block_queue.pop_next_block()
 
 func _select_block(block):
 	selected_block = block
@@ -76,55 +77,116 @@ func _input(event):
 			pass
 		else:
 			
+			# Left Click
 			if event.button_index == 1:
-					
-					if selected_block == null: return
-					
-					if !board.is_in_board(get_selected_tile()): 
+				
+				# Attempt to place a block
+				
+				if selected_block == null: return # No block to place
+				
+				if !board.is_in_board(get_selected_tile()): 
+					cursor.shake_effect()
+					return # Cursor can't be out of bounds
+				
+				# TODO, There's a bug where you can bypass checks if you go fast
+				
+				# Verify that individual block squares are valid
+				for pos in selected_block.get_children_global_pos():
+					if !board.is_in_board(board.global_to_tile(pos)) or !board.is_walkable_tile(board.global_to_tile(pos)): 
 						cursor.shake_effect()
-						return
+						return # Some block is out of bounds
+				
+				# Verify that placing this block does not cut off the path from start to finish
+				var proposed_block_positions = [] # The tilemap positions each tile in the block takes up
+				var rows_changed = [] # The y positions of the rows will be changed by this block
+				var clears_line = false # Whether or not the new block will clear a line
+				var full_rows = [] # The y positions of the rows that are completed by the new block
+				var towers_to_delete = [] # The towers that are a part of a cleared line
+				
+				# Record data based on the tiles in the block
+				for pos in selected_block.get_children_global_pos():
+					var tilemap_pos = board.global_to_tile(pos)
+					proposed_block_positions.append(tilemap_pos)
 					
-					# TODO, There's a bug where you can bypass checks if you go fast
+					if !rows_changed.has(tilemap_pos.y):
+						rows_changed.append(tilemap_pos.y) 
+				
+				# Verify that this placement does not completely block off the enemy's route
+				if !board.is_traversable(board.global_to_tile(enemy_start), board.global_to_tile(enemy_end), proposed_block_positions):
 					
-					# Verify that individual block squares are valid
-					for pos in selected_block.get_children_global_pos():
-						if !board.is_in_board(board.global_to_tile(pos)) or !board.is_walkable_tile(board.global_to_tile(pos)): 
-							cursor.shake_effect()
-							return
-					
-					# Verify that placing this block does not cut off the path from start to finish
-					var proposed_block_positions = []
-					for pos in selected_block.get_children_global_pos():
-						proposed_block_positions.append(board.global_to_tile(pos))
-					
-					# Verify that this placement does not completely block off the enemy's route
-					if !board.is_traversable(board.global_to_tile(enemy_start), board.global_to_tile(enemy_end), proposed_block_positions):
-						cursor.shake_effect()
-						return
+					# Board is not traversable, check if there is a complete line
+					# If there is a complete line, then placement can happen because rows will be cleared
+					for y in rows_changed:
+						if board.is_complete_line(y, proposed_block_positions):
+							clears_line = true
+							if !full_rows.has(y):
+								full_rows.append(y)
 						
-					# Animation Cancelling:
-					# Make sure that the cursor is not tweening
-					# If they are, instantly finish any animation
-					if cursor.is_moving(): cursor.force_complete_tweens()
+					if !clears_line:
+						# Fail to place
+						cursor.shake_effect()
+						return
+				
+				# Block placement can happen at this point
+				
+				# Animation Cancelling:
+				# Make sure that the cursor is not tweening
+				# If they are, instantly finish any animation
+				if cursor.is_moving(): cursor.force_complete_tweens()
+
+				# Place the block
+				# The global position of the tiles in the selected_block (block.gd) are
+				# used to calculate the placed tiles positions with board.world_to_map()
+				# So, since the current block follows the cursor, what you see is basically what you get
+				# except for quantizing the positions to fit on the grid
+				for pos in selected_block.get_children_global_pos():
+					var new_tower = selected_tower.instance()
+					add_child(new_tower)
+					new_tower.init(board.quantize_position(pos) + cell_offset, board)
 					
-					# Place the block
-					# The global position of the tiles in the selected_block (block.gd) are
-					# used to calculate the placed tiles positions with board.world_to_map()
-					# So, since the current block follows the cursor, what you see is basically what you get
-					# except for quantizing the positions to fit on the grid
-					for pos in selected_block.get_children_global_pos():
-						var new_tower = selected_tower.instance()
-						add_child(new_tower)
-						new_tower.init(board.quantize_position(pos) + cell_offset, board)
+					if clears_line:
+						towers_to_delete.append(new_tower)
 					
-					# The selected block is no longer needed
-					selected_block.queue_free()
-					_clear_selection()
+				if clears_line:
+					# Get all of the towers in cleared lines and destroy them
+					
+					# Prepare to segment cast
+					var space_state = get_world_2d().direct_space_state
+					var segment = SegmentShape2D.new()
+					var query = Physics2DShapeQueryParameters.new()
+					query.collide_with_areas = true
+					
+					# For each completed row
+					for row in full_rows:
+						
+						# Set endpoints of cast
+						var start = board.tile_to_global(Vector2(-1, row)) + cell_offset
+						var end = board.tile_to_global(Vector2(40, row)) + cell_offset
+						segment.set_a(start)
+						segment.set_b(end)
+						
+						query.set_shape(segment)
+						
+						# Find all towers in the row
+						var hits = space_state.intersect_shape(query, 20)
+						
+						# Add them to the list of towers to delete
+						for hit in hits:
+							towers_to_delete.append(hit.collider.get_parent())
+					
+					
+					# Delete towers
+					for tower in towers_to_delete:
+						tower.destroy()
+				
+				# The selected block is no longer needed
+				selected_block.queue_free()
+				_clear_selection()
 					
 			
+			# Right Click
 			if event.button_index == 2:
 				
-				# Rotate the block
 				cursor.rotate_90()
 				
 				
@@ -190,7 +252,7 @@ func _input(event):
 				held_block = selected_block
 				_clear_selection()
 				emit_signal("held_block_changed", held_block.preview_image)
-			
+		
 			
 
 func get_mouse_pos():

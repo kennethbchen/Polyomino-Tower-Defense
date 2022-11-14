@@ -23,7 +23,10 @@ func is_walkable_tile(tilemap_coordinate: Vector2):
 
 func global_to_tile(global_position: Vector2):
 	return world_to_map(to_local(global_position))
-	
+
+func tile_to_global(tilemap_position: Vector2):
+	return to_global(map_to_world(tilemap_position))
+
 # Returns global coordinates
 func quantize_position(global_position: Vector2):
 	return map_to_world(world_to_map(global_position))
@@ -65,3 +68,16 @@ func is_traversable(tilemap_start: Vector2, tilemap_end: Vector2, proposed_block
 
 	return false
 
+# This assumes that 0,0 is the top left tile in the area where placing blocks is allowed
+func is_complete_line(row, proposed_blocks: Array):
+	var current_tile = Vector2(0, row)
+	
+	# Keep checking if there is a continuous chain of blocked tiles
+	while(get_cellv(current_tile) == Util.NAV_BLOCKED_TILE or proposed_blocks.has(current_tile)):
+		current_tile += Vector2(1,0)
+		
+	# If the line is completed, then current_tile should now be an empty tile
+	if get_cellv(current_tile) == -1:
+		return true
+	else:
+		return false
