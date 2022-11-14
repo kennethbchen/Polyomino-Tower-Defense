@@ -166,6 +166,7 @@ func _input(event):
 						segment.set_b(end)
 						
 						query.set_shape(segment)
+						query.collision_layer = tower_physics_layer
 						
 						# Find all towers in the row
 						var hits = space_state.intersect_shape(query, 20)
