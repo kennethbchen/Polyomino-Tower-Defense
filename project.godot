@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "QueueDisplay",
 "language": "GDScript",
-"path": "res://QueueDisplay.gd"
+"path": "res://Scripts/QueueDisplay.gd"
 }, {
 "base": "Node",
 "class": "Util",

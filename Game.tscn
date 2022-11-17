@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -14,7 +14,9 @@
 [ext_resource path="res://Scenes/Blocks/LPiece.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/QueueDisplay.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scripts/QueueDisplayContainer.gd" type="Script" id=14]
-[ext_resource path="res://HeldBlockDisplay.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/EnemyOrchestrator.gd" type="Script" id=15]
+[ext_resource path="res://Scripts/HeldBlockDisplay.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/WaveTimeDisplay.gd" type="Script" id=17]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
@@ -102,9 +104,43 @@ margin_right = 169.0
 margin_bottom = 302.0
 queue_position = 3
 
+[node name="WaveInfo" type="Control" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -184.0
+margin_right = 320.0
+
+[node name="WaveTimeDisplay" type="Control" parent="CanvasLayer/WaveInfo"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -88.0
+margin_right = 256.0
+script = ExtResource( 17 )
+
+[node name="Panel" type="Panel" parent="CanvasLayer/WaveInfo/WaveTimeDisplay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="CanvasLayer/WaveInfo/WaveTimeDisplay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+text = "Next Wave: 0s"
+valign = 1
+
 [node name="BlockQueueHandler" type="Node" parent="."]
 script = ExtResource( 3 )
 blocks = [ ExtResource( 7 ), ExtResource( 12 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 11 ) ]
+
+[node name="EnemyOrchestrator" type="Node" parent="."]
+script = ExtResource( 15 )
+
+[node name="WaveTimer" type="Timer" parent="EnemyOrchestrator"]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
 
 [node name="BoardCosmetic" type="TileMap" parent="."]
 position = Vector2( 864, -256 )
@@ -144,3 +180,5 @@ script = ExtResource( 4 )
 [node name="RotTween" type="Tween" parent="Cursor"]
 
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
+[connection signal="time_left_int_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveTimeDisplay" method="_on_time_left_int_changed"]
+[connection signal="timeout" from="EnemyOrchestrator/WaveTimer" to="EnemyOrchestrator" method="_on_wave_timer_timeout"]
