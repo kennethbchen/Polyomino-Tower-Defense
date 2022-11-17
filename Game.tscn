@@ -139,7 +139,6 @@ enemy = ExtResource( 18 )
 
 [node name="WaveTimer" type="Timer" parent="EnemyOrchestrator"]
 wait_time = 10.0
-one_shot = true
 
 [node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
 
