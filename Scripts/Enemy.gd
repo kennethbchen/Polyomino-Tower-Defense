@@ -6,10 +6,14 @@ onready var nav_agent = $NavigationAgent2D
 
 var destination: Vector2
 
+
+signal on_enemy_destroyed()
+
 func init(start_pos, end_pos):
 	position = start_pos
 	destination = end_pos
 	nav_agent.set_target_location(destination)
+
 
 
 
@@ -25,9 +29,11 @@ func take_damage(damage):
 		destroy()
 		
 func destroy():
+	emit_signal("on_enemy_destroyed")
 	queue_free()
 
 func _on_velocity_computed(safe_velocity: Vector2):
 	move_and_slide(safe_velocity)
-	
+
+
 

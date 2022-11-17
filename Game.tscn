@@ -16,7 +16,7 @@
 [ext_resource path="res://Scripts/QueueDisplayContainer.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/EnemyOrchestrator.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/HeldBlockDisplay.gd" type="Script" id=16]
-[ext_resource path="res://Scripts/WaveTimeDisplay.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/WaveStatusDisplay.gd" type="Script" id=17]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
@@ -110,18 +110,18 @@ anchor_bottom = 1.0
 margin_top = -184.0
 margin_right = 320.0
 
-[node name="WaveTimeDisplay" type="Control" parent="CanvasLayer/WaveInfo"]
+[node name="WaveStatusDisplay" type="Control" parent="CanvasLayer/WaveInfo"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -88.0
 margin_right = 256.0
 script = ExtResource( 17 )
 
-[node name="Panel" type="Panel" parent="CanvasLayer/WaveInfo/WaveTimeDisplay"]
+[node name="Panel" type="Panel" parent="CanvasLayer/WaveInfo/WaveStatusDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Label" type="Label" parent="CanvasLayer/WaveInfo/WaveTimeDisplay"]
+[node name="Label" type="Label" parent="CanvasLayer/WaveInfo/WaveStatusDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 22.0
@@ -138,7 +138,6 @@ script = ExtResource( 15 )
 [node name="WaveTimer" type="Timer" parent="EnemyOrchestrator"]
 wait_time = 10.0
 one_shot = true
-autostart = true
 
 [node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
 
@@ -180,5 +179,6 @@ script = ExtResource( 4 )
 [node name="RotTween" type="Tween" parent="Cursor"]
 
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
-[connection signal="time_left_int_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveTimeDisplay" method="_on_time_left_int_changed"]
+[connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_wave_status_changed"]
 [connection signal="timeout" from="EnemyOrchestrator/WaveTimer" to="EnemyOrchestrator" method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
