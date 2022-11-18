@@ -16,7 +16,7 @@
 [ext_resource path="res://Scripts/QueueDisplayContainer.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/EnemyOrchestrator.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/HeldBlockDisplay.gd" type="Script" id=16]
-[ext_resource path="res://Scripts/WaveStatusDisplay.gd" type="Script" id=17]
+[ext_resource path="res://Scenes/WaveStateDisplay.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=18]
 
 [node name="Root" type="Node2D"]
@@ -111,23 +111,12 @@ anchor_bottom = 1.0
 margin_top = -184.0
 margin_right = 320.0
 
-[node name="WaveStatusDisplay" type="Control" parent="CanvasLayer/WaveInfo"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -88.0
-margin_right = 256.0
-script = ExtResource( 17 )
+[node name="WaveCountDisplay" parent="CanvasLayer/WaveInfo" instance=ExtResource( 17 )]
+margin_top = -176.0
+margin_right = 128.0
+margin_bottom = -88.0
 
-[node name="Panel" type="Panel" parent="CanvasLayer/WaveInfo/WaveStatusDisplay"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="Label" type="Label" parent="CanvasLayer/WaveInfo/WaveStatusDisplay"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 22.0
-text = "Next Wave: 0s"
-valign = 1
+[node name="WaveStatusDisplay" parent="CanvasLayer/WaveInfo" instance=ExtResource( 17 )]
 
 [node name="BlockQueueHandler" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -180,6 +169,7 @@ script = ExtResource( 4 )
 [node name="RotTween" type="Tween" parent="Cursor"]
 
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
-[connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_wave_status_changed"]
+[connection signal="wave_count_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveCountDisplay" method="_on_wave_state_changed"]
+[connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_wave_state_changed"]
 [connection signal="timeout" from="EnemyOrchestrator/WaveTimer" to="EnemyOrchestrator" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]

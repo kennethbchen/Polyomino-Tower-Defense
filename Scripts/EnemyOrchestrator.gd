@@ -9,25 +9,28 @@ onready var spawn_timer = $SpawnTimer
 var enemy_start = Vector2(1024, -352)
 var enemy_end = Vector2(1024, 352)
 
-# Wave Status Strings
+# Wave State Strings
 var wave_countdown_message = "Next Wave In: %ss."
+var wave_count_message = "Wave %s"
 
 # Wave Parameters
-var wave_cooldown = 10
+var wave_cooldown = 30
 var spawn_delay = 0.5
 var enemies_per_round = 10
 
 # Wave State
-var wave_number = 1
+var wave_count = 1
 var time_left_int: int = 0
 var enemies_to_spawn: int = 0
 var enemies_alive: int = 0
 
+signal wave_count_changed(new_wave)
 signal wave_status_changed(new_time)
 
 
 func _ready():
 	wave_timer.start(10)
+	emit_signal("wave_count_changed", wave_count_message % wave_count)
 	
 func _process(delta):
 	
@@ -37,14 +40,17 @@ func _process(delta):
 
 		
 func _on_wave_timer_timeout():
-
+	
 	# Modify Spawn Parameters
+	
 	# -0.001 to avoid wave timer display flickering from n to n-1 in a frame
 	wave_timer.start(wave_cooldown - 0.001)
 	
 	# Start Spawning Enemies
 	enemies_to_spawn = enemies_per_round
 	spawn_timer.start(spawn_delay)
+	wave_count += 1
+	emit_signal("wave_count_changed", wave_count_message % wave_count)
 	
 func _on_spawn_timer_timeout():
 	# Spawn Enemies until the desired number is reached
