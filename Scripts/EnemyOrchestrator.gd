@@ -14,12 +14,14 @@ var wave_countdown_message = "Next Wave In: %ss."
 var wave_count_message = "Wave %s"
 
 # Wave Parameters
-var wave_cooldown = 30
+var wave_cooldown = 25
 var spawn_delay = 0.5
 var enemies_per_round = 10
+var enemy_health = 4
+var enemy_speed = 40
 
 # Wave State
-var wave_count = 1
+var wave_count = 0
 var time_left_int: int = 0
 var enemies_to_spawn: int = 0
 var enemies_alive: int = 0
@@ -41,7 +43,24 @@ func _process(delta):
 		
 func _on_wave_timer_timeout():
 	
+	
+	
 	# Modify Spawn Parameters
+	if wave_count > 0:
+		enemies_per_round += 2
+		
+		if wave_count % 4 == 0:
+			enemy_health += 1
+		
+		enemy_speed += 2
+	
+	wave_count += 1
+	
+	print("Wave ", wave_count)
+	print("Enemies: ", enemies_per_round)
+	print("Enemy Health: ", enemy_health)
+	print("Enemy Speed: ", enemy_speed)
+	print("-----")
 	
 	# -0.001 to avoid wave timer display flickering from n to n-1 in a frame
 	wave_timer.start(wave_cooldown - 0.001)
@@ -49,7 +68,7 @@ func _on_wave_timer_timeout():
 	# Start Spawning Enemies
 	enemies_to_spawn = enemies_per_round
 	spawn_timer.start(spawn_delay)
-	wave_count += 1
+	
 	emit_signal("wave_count_changed", wave_count_message % wave_count)
 	
 func _on_spawn_timer_timeout():
@@ -58,6 +77,7 @@ func _on_spawn_timer_timeout():
 		var new_enemy = enemy.instance()
 		add_child(new_enemy)
 		new_enemy.init(enemy_start, enemy_end)
+		new_enemy.set_stats(enemy_health, enemy_speed)
 		new_enemy.connect("on_enemy_destroyed", self, "_on_enemy_destroyed")
 		enemies_to_spawn -= 1
 		enemies_alive += 1
