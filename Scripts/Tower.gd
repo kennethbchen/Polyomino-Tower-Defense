@@ -29,7 +29,7 @@ func _ready():
 	pass
 	
 func _process(delta):
-	
+
 	if !detected_enemies.empty():
 		
 		aim_system.aim_at_position(detected_enemies[0].position)
@@ -62,9 +62,15 @@ func destroy():
 	queue_free()
 
 func _on_body_entered_range(body: PhysicsBody2D):
+	
+	if body == null: return
+	
 	detected_enemies.append(body)
 
 func _on_body_exited_range(body: PhysicsBody2D):
+	
+	if body == null: return
+	
 	var ind = detected_enemies.find(body)
 	if ind != -1:
 		detected_enemies.remove(ind)
