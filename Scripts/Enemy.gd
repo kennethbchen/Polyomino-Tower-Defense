@@ -9,7 +9,7 @@ onready var nav_agent = $NavigationAgent2D
 
 var destination: Vector2
 
-
+signal health_changed(current_health, max_health)
 signal on_enemy_destroyed()
 
 func _ready():
@@ -36,11 +36,16 @@ func _physics_process(delta):
 	nav_agent.set_velocity(global_position.direction_to(nav_agent.get_next_location()) * speed)
 
 func take_damage(damage):
+	
+	if damage <= 0: return
+	
 	health = max(0, health - damage)
 	
 	if health <= 0:
 		destroy()
-		
+	
+	emit_signal("health_changed", health, max_health)
+	
 func destroy():
 	emit_signal("on_enemy_destroyed")
 	queue_free()
