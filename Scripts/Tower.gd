@@ -2,6 +2,8 @@ extends Node2D
 
 export(PackedScene) var projectile
 
+export(PackedScene) var super_projectile
+
 export var cooldown_time = 2
 
 onready var aim_system = $AimSystem
@@ -57,8 +59,23 @@ func _process(delta):
 			
 
 
-func destroy():
+func destroy(super = false):
 	emit_signal("tower_removed", position)
+	
+	if super:
+		
+		# Spawn a super projectile here before the tower is destroyed
+		var up = super_projectile.instance()
+		up.position = position
+		up.rotation_degrees = -90
+		get_tree().root.add_child(up)
+		
+		var down = super_projectile.instance()
+		down.position = position
+		down.rotation_degrees = 90
+		get_tree().root.add_child(down)
+		
+
 	queue_free()
 
 func _on_body_entered_range(body: PhysicsBody2D):

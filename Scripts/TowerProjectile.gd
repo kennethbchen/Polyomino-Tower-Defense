@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name TowerProjectile
+
 export var damage = 1
 
 export var move_speed = 350
@@ -23,11 +25,16 @@ func _on_time_to_live_timeout():
 func destroy():
 	queue_free()
 
+func _on_body_hit(body: Node):
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
+	
+	destroy()
+
 func _on_body_entered(body: Node):
 	
 	if body == null: return
 	
-	if body.has_method("take_damage"):
-		body.take_damage(damage)
-	destroy()
+	_on_body_hit(body)
 	
+

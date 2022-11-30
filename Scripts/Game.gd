@@ -178,7 +178,11 @@ func _input(event):
 					
 					# Delete towers
 					for tower in towers_to_delete:
-						tower.destroy()
+						
+						if board.global_to_tile(tower.position).y in full_rows:
+							tower.destroy(true)
+						else:
+							tower.destroy()
 				
 				# The selected block is no longer needed
 				selected_block.queue_free()
