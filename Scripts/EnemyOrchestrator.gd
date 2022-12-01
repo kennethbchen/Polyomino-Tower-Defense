@@ -29,6 +29,7 @@ var enemies_alive: int = 0
 signal wave_count_changed(new_wave)
 signal wave_status_changed(new_time)
 
+signal enemy_killed()
 
 func _ready():
 	wave_timer.start(10)
@@ -70,20 +71,27 @@ func _on_wave_timer_timeout():
 	spawn_timer.start(spawn_delay)
 	
 	emit_signal("wave_count_changed", wave_count_message % wave_count)
+
+func _spawn_enemy():
+	var new_enemy = enemy.instance()
+	add_child(new_enemy)
+	new_enemy.init(enemy_start, enemy_end)
+	new_enemy.set_stats(enemy_health, enemy_speed)
+	new_enemy.connect("enemy_destroyed", self, "_on_enemy_destroyed")
+	enemies_to_spawn -= 1
+	enemies_alive += 1
 	
+
 func _on_spawn_timer_timeout():
 	# Spawn Enemies until the desired number is reached
 	if enemies_to_spawn > 0:
-		var new_enemy = enemy.instance()
-		add_child(new_enemy)
-		new_enemy.init(enemy_start, enemy_end)
-		new_enemy.set_stats(enemy_health, enemy_speed)
-		new_enemy.connect("on_enemy_destroyed", self, "_on_enemy_destroyed")
-		enemies_to_spawn -= 1
-		enemies_alive += 1
+		_spawn_enemy()
 	else:
 		spawn_timer.stop()
 
-func _on_enemy_destroyed():
-
+func _on_enemy_destroyed(killed):
+	
+	if killed:
+		emit_signal("enemy_killed")
+		
 	enemies_alive = max(0, enemies_alive - 1)

@@ -4,8 +4,6 @@ var cell_size = 32
 
 var cell_offset = Vector2(cell_size / 2, cell_size / 2)
 
-var root
-
 onready var camera = $Camera2D
 
 onready var cursor = $Cursor
@@ -14,23 +12,35 @@ onready var board = $BoardData
 
 onready var block_queue = $BlockQueueHandler
 
+onready var enemy_orchestrator = $EnemyOrchestrator
+
 export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
 
+
+# Enemy Stuff
 var temp_enemy: Resource
 
 var enemy_start = Vector2(1024, -352)
 var enemy_end = Vector2(1024, 352)
 
 
+# Player Selected Block State
+
 var selected_block: Node2D = null
 var held_block: Node2D = null
 var selected_tower: Resource
 
+# Currency Stuff
+var money = 8
+
+var tower_cost = 4
+
+var kill_reward = 1
+
+
 signal held_block_changed(image)
 
 func _ready():
-	
-	root = get_tree().root
 	
 	selected_tower = load("res://Scenes/Tower.tscn")
 	
@@ -44,7 +54,7 @@ func _select_block(block):
 	selected_block = block
 	block.init(selected_tower)
 	cursor.add_child(block)
-	pass
+
 # Un-selects the currently selected block
 # Does not do anything to the selected_block node itself
 # It has to be dealt with separately
@@ -83,6 +93,10 @@ func _input(event):
 				# Attempt to place a block
 				
 				if selected_block == null: return # No block to place
+				
+				if money < tower_cost: 
+					print("no money")
+					return # Not enough money
 				
 				if !board.is_in_board(get_selected_tile()): 
 					cursor.shake_effect()
@@ -184,6 +198,8 @@ func _input(event):
 						else:
 							tower.destroy()
 				
+				money -= tower_cost
+				
 				# The selected block is no longer needed
 				selected_block.queue_free()
 				_clear_selection()
@@ -202,9 +218,7 @@ func _input(event):
 		if !event.pressed: return
 		
 		if event.scancode == KEY_SPACE:
-			var new_enemy = temp_enemy.instance()
-			add_child(new_enemy)
-			new_enemy.init(enemy_start, enemy_end)
+			enemy_orchestrator._spawn_enemy()
 		
 		# Simulate clicking stuff to select blocks
 		if event.scancode == KEY_A:
@@ -270,3 +284,7 @@ func get_quantized_cursor_pos():
 # Returns tilemap coordinates
 func get_selected_tile():
 	return board.global_to_tile(get_mouse_pos())
+
+
+func _on_enemy_killed():
+	money += kill_reward
