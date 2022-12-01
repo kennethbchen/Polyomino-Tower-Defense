@@ -16,7 +16,7 @@
 [ext_resource path="res://Scripts/QueueDisplayContainer.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/EnemyOrchestrator.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/HeldBlockDisplay.gd" type="Script" id=16]
-[ext_resource path="res://Scenes/WaveStateDisplay.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/StateUIDisplay.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=18]
 
 [node name="Root" type="Node2D"]
@@ -170,7 +170,7 @@ script = ExtResource( 4 )
 
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
 [connection signal="enemy_killed" from="EnemyOrchestrator" to="." method="_on_enemy_killed"]
-[connection signal="wave_count_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveCountDisplay" method="_on_wave_state_changed"]
-[connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_wave_state_changed"]
+[connection signal="wave_count_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveCountDisplay" method="_on_state_changed"]
+[connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_state_changed"]
 [connection signal="timeout" from="EnemyOrchestrator/WaveTimer" to="EnemyOrchestrator" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
