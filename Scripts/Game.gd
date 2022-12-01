@@ -39,12 +39,15 @@ var kill_reward = 1
 
 
 signal held_block_changed(image)
+signal money_amount_changed(money_amount)
 
 func _ready():
 	
 	selected_tower = load("res://Scenes/Tower.tscn")
 	
 	temp_enemy = load("res://Scenes/Enemy.tscn")
+	
+	emit_signal("money_amount_changed", money)
 
 func _get_next_block():
 
@@ -199,6 +202,7 @@ func _input(event):
 							tower.destroy()
 				
 				money -= tower_cost
+				emit_signal("money_amount_changed", money)
 				
 				# The selected block is no longer needed
 				selected_block.queue_free()
@@ -288,3 +292,6 @@ func get_selected_tile():
 
 func _on_enemy_killed():
 	money += kill_reward
+	
+	emit_signal("money_amount_changed", money)
+
