@@ -28,6 +28,10 @@ var enemy_end = Vector2(1024, 352)
 
 # Player Selected Block State
 
+enum CursorState {IDLE, PLACING, DELETING}
+
+var cursor_state = CursorState.IDLE
+
 var selected_block: Node2D = null
 var held_block: Node2D = null
 var selected_tower: Resource
