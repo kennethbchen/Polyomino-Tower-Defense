@@ -14,6 +14,8 @@ onready var block_queue = $BlockQueueHandler
 
 onready var enemy_orchestrator = $EnemyOrchestrator
 
+export(PackedScene) var floating_text
+
 export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
 
 
@@ -40,6 +42,7 @@ var kill_reward = 1
 
 signal held_block_changed(image)
 signal money_amount_changed(money_amount)
+signal tower_affordability_changed(can_afford)
 
 func _ready():
 	
@@ -66,6 +69,11 @@ func _clear_selection():
 	cursor.reset_rotation()
 	cursor.remove_child(selected_block)
 	selected_block = null
+
+func _create_floating_text(message):
+	var new_text = floating_text.instance()
+	add_child(new_text)
+	new_text.init(message, get_quantized_cursor_pos() + cell_offset + Vector2(0, -20))
 
 
 func _input(event):
@@ -97,21 +105,32 @@ func _input(event):
 				
 				if selected_block == null: return # No block to place
 				
-				if money < tower_cost: 
-					print("no money")
-					return # Not enough money
-				
 				if !board.is_in_board(get_selected_tile()): 
 					cursor.shake_effect()
+					_create_floating_text("Out Of Bounds!")
 					return # Cursor can't be out of bounds
+					
+				
 				
 				# TODO, There's a bug where you can bypass checks if you go fast
 				
 				# Verify that individual block squares are valid
 				for pos in selected_block.get_children_global_pos():
-					if !board.is_in_board(board.global_to_tile(pos)) or !board.is_walkable_tile(board.global_to_tile(pos)): 
+					if !board.is_in_board(board.global_to_tile(pos)): 
 						cursor.shake_effect()
+						_create_floating_text("Out Of Bounds!")
+						return
+					
+					if !board.is_walkable_tile(board.global_to_tile(pos)):
+						cursor.shake_effect()
+						_create_floating_text("Space Occupied!")
 						return # Some block is out of bounds
+				
+				if money < tower_cost: 
+					cursor.shake_effect()
+					_create_floating_text("Not Enough Money!")
+					
+					return # Not enough money
 				
 				# Verify that placing this block does not cut off the path from start to finish
 				var proposed_block_positions = [] # The tilemap positions each tile in the block takes up
@@ -142,6 +161,7 @@ func _input(event):
 					if !clears_line:
 						# Fail to place
 						cursor.shake_effect()
+						_create_floating_text("Blocks Path!")
 						return
 				
 				# Block placement can happen at this point
@@ -294,4 +314,9 @@ func _on_enemy_killed():
 	money += kill_reward
 	
 	emit_signal("money_amount_changed", money)
+	
+	if money >= tower_cost:
+		emit_signal("tower_affordability_changed", true)
+	else:
+		emit_signal("tower_affordability_changed", false)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -18,9 +18,11 @@
 [ext_resource path="res://Scripts/HeldBlockDisplay.gd" type="Script" id=16]
 [ext_resource path="res://Scenes/StateUIDisplay.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/FloatingText.tscn" type="PackedScene" id=19]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
+floating_text = ExtResource( 19 )
 tower_physics_layer = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -64,43 +66,49 @@ margin_bottom = 14.0
 script = ExtResource( 14 )
 queue_handler_path = NodePath("../../BlockQueueHandler")
 
-[node name="NextLabel" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
+[node name="CostLabel" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
 margin_right = 169.0
 margin_bottom = 14.0
+text = "Cost: $4"
+
+[node name="NextLabel" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
+margin_top = 18.0
+margin_right = 169.0
+margin_bottom = 32.0
 text = "Next:"
 
 [node name="QueueDisplay" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 18.0
+margin_top = 36.0
 margin_right = 169.0
-margin_bottom = 81.0
+margin_bottom = 95.0
 
 [node name="Spacer" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
-margin_top = 85.0
+margin_top = 99.0
 margin_right = 169.0
-margin_bottom = 99.0
+margin_bottom = 113.0
 
 [node name="QueueDisplay2" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 103.0
+margin_top = 117.0
 margin_right = 169.0
-margin_bottom = 167.0
+margin_bottom = 176.0
 queue_position = 1
 
 [node name="QueueDisplay3" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 171.0
+margin_top = 180.0
 margin_right = 169.0
-margin_bottom = 234.0
+margin_bottom = 239.0
 queue_position = 2
 
 [node name="QueueDisplay4" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 238.0
+margin_top = 243.0
 margin_right = 169.0
 margin_bottom = 302.0
 queue_position = 3

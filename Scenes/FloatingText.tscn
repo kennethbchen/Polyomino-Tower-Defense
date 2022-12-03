@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/FloatingText.gd" type="Script" id=1]
+
+[node name="FloatingText" type="Position2D"]
+z_index = 6
+script = ExtResource( 1 )
+speed = 70
+direction = Vector2( 0, -1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -72.0
+margin_top = -8.0
+margin_right = 72.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Text------------"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_all_tweens_completed"]
