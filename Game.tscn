@@ -185,6 +185,7 @@ script = ExtResource( 4 )
 
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
 [connection signal="money_amount_changed" from="." to="CanvasLayer/MoneyDisplay" method="_on_state_changed"]
+[connection signal="tower_affordability_changed" from="." to="CanvasLayer/QueueDisplayContainer" method="_on_tower_affordability_changed"]
 [connection signal="enemy_killed" from="EnemyOrchestrator" to="." method="_on_enemy_killed"]
 [connection signal="wave_count_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveCountDisplay" method="_on_state_changed"]
 [connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_state_changed"]

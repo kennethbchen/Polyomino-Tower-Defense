@@ -75,6 +75,16 @@ func _create_floating_text(message):
 	add_child(new_text)
 	new_text.init(message, get_quantized_cursor_pos() + cell_offset + Vector2(0, -20))
 
+func _change_money(amount):
+	
+	money += amount
+	
+	emit_signal("money_amount_changed", money)
+	
+	if money >= tower_cost:
+		emit_signal("tower_affordability_changed", true)
+	else:
+		emit_signal("tower_affordability_changed", false)
 
 func _input(event):
 	
@@ -221,8 +231,7 @@ func _input(event):
 						else:
 							tower.destroy()
 				
-				money -= tower_cost
-				emit_signal("money_amount_changed", money)
+				_change_money(-tower_cost)
 				
 				# The selected block is no longer needed
 				selected_block.queue_free()
@@ -311,12 +320,8 @@ func get_selected_tile():
 
 
 func _on_enemy_killed():
-	money += kill_reward
+	_change_money(kill_reward)
+
 	
-	emit_signal("money_amount_changed", money)
 	
-	if money >= tower_cost:
-		emit_signal("tower_affordability_changed", true)
-	else:
-		emit_signal("tower_affordability_changed", false)
 
