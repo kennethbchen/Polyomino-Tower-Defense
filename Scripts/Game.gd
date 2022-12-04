@@ -28,7 +28,7 @@ var enemy_start = Vector2(1024, -352)
 var enemy_end = Vector2(1024, 352)
 
 
-# Player Selected Block State
+# Player Input State
 
 enum CursorState {IDLE, PLACING, DELETING}
 var cursor_state = CursorState.IDLE
@@ -41,6 +41,7 @@ var selected_tower: Resource
 var money = 8
 
 var tower_cost = 4
+var delete_cost = 2
 
 var kill_reward = 1
 
@@ -290,7 +291,38 @@ func _input(event):
 		elif cursor_state == CursorState.DELETING:
 			
 			if event.button_index == 1:
-				print("Delete mode")		
+				
+				# Attempt to delete a tower
+				
+				if money < delete_cost: 
+					cursor.shake_effect()
+					_create_floating_text("Not Enough Money!")
+					
+					return # Not enough money	
+				
+				if !board.is_in_board(board.global_to_tile(get_mouse_pos())):
+					cursor.shake_effect()
+					_create_floating_text("Out of Bounds!")
+						
+					return # Not enough money	
+				
+				
+				# Check if there is a tower where the cursor is
+				# Prepare to circle cast
+				
+				# TODO: General casting function?
+				var space_state = get_world_2d().direct_space_state
+						
+				# Find the tower
+				var hits = space_state.intersect_point(get_quantized_cursor_pos(), 1, [], tower_physics_layer, true, true)
+				
+				# Delete the tower, if found
+				if !hits.empty():
+					hits[0].collider.get_parent().destroy()
+					
+				_change_money(-delete_cost)
+
+				
 				
 			
 	# Debug Stuff
