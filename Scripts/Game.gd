@@ -345,6 +345,8 @@ func _input(event):
 		# Simulate clicking stuff to select blocks
 		if event.scancode == KEY_A:
 			
+			if cursor_state == CursorState.PLACING: return
+			
 			_select_block(_get_next_block())
 		
 		if event.scancode == KEY_S:
