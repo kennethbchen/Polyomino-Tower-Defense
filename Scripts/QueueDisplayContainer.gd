@@ -12,7 +12,7 @@ func _ready():
 			queue_handler.connect("queue_changed", child, "_on_queue_changed")
 	
 func _on_tower_affordability_changed(can_afford):
-	print(can_afford)
+
 	for child in displays:
 		
 		if can_afford:

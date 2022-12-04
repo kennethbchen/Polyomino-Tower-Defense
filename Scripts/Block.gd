@@ -2,8 +2,6 @@ extends Node2D
 
 var tower: Resource
 
-export var block_texture_path: Resource
-
 export var preview_image: Texture
 
 export var block_texture: Texture = load("res://Sprites/Blocks/Block.png")

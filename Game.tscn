@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -19,9 +19,11 @@
 [ext_resource path="res://Scenes/StateUIDisplay.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Scenes/FloatingText.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Sprites/DeletionCursor.png" type="Texture" id=20]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
+deletetion_cursor = ExtResource( 20 )
 floating_text = ExtResource( 19 )
 tower_physics_layer = 1
 
@@ -182,6 +184,8 @@ script = ExtResource( 4 )
 [node name="PosTween" type="Tween" parent="Cursor"]
 
 [node name="RotTween" type="Tween" parent="Cursor"]
+
+[node name="Sprite" type="Sprite" parent="Cursor"]
 
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
 [connection signal="money_amount_changed" from="." to="CanvasLayer/MoneyDisplay" method="_on_state_changed"]

@@ -14,6 +14,8 @@ onready var block_queue = $BlockQueueHandler
 
 onready var enemy_orchestrator = $EnemyOrchestrator
 
+export var deletetion_cursor: Texture
+
 export(PackedScene) var floating_text
 
 export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
@@ -29,7 +31,6 @@ var enemy_end = Vector2(1024, 352)
 # Player Selected Block State
 
 enum CursorState {IDLE, PLACING, DELETING}
-
 var cursor_state = CursorState.IDLE
 
 var selected_block: Node2D = null
@@ -57,22 +58,63 @@ func _ready():
 	emit_signal("money_amount_changed", money)
 
 func _get_next_block():
-
 	return block_queue.pop_next_block()
 
+# Un-selects the currently selected block
+# Returns selected_block
+# Does not do anything to the selected_block node itself other than return it
+# It has to be dealt with separately
+# TODO: Rename to _pop_selection()?
+func _clear_selection():
+	
+	# Nothing selected
+	if cursor_state != CursorState.PLACING: return
+	
+	cursor_state = CursorState.IDLE
+	
+	var temp = selected_block
+	
+	cursor.reset_rotation()
+	cursor.remove_child(selected_block)
+	
+	selected_block = null
+	
+	return temp
+
 func _select_block(block):
+	
+	# Already selecting a block
+	if cursor_state == CursorState.PLACING: return
+	
+	cursor_state = CursorState.PLACING
+	
 	selected_block = block
 	block.init(selected_tower)
 	cursor.add_child(block)
 
-# Un-selects the currently selected block
-# Does not do anything to the selected_block node itself
-# It has to be dealt with separately
-func _clear_selection():
+
+func _deselect_block():
+	# Clear Selection and put selected block back in the queue
+	if cursor_state != CursorState.PLACING: return
 	
-	cursor.reset_rotation()
-	cursor.remove_child(selected_block)
-	selected_block = null
+	# The selected block goes back on the queue
+	block_queue.push_front(_clear_selection())
+
+
+func _start_delete():
+	
+	if cursor_state == CursorState.PLACING:
+		_deselect_block()
+		
+	cursor.show_sprite(deletetion_cursor)
+	
+	cursor_state = CursorState.DELETING
+
+
+func _end_delete():
+	cursor.hide_sprite()
+	
+	cursor_state = CursorState.IDLE
 
 func _create_floating_text(message):
 	var new_text = floating_text.instance()
@@ -108,16 +150,14 @@ func _input(event):
 		
 		if !event.pressed: return
 		
-		if selected_block == null:
-			pass
-		else:
+		if cursor_state == CursorState.IDLE: 
+			return
+		elif cursor_state == CursorState.PLACING:
 			
 			# Left Click
 			if event.button_index == 1:
 				
 				# Attempt to place a block
-				
-				if selected_block == null: return # No block to place
 				
 				if !board.is_in_board(get_selected_tile()): 
 					cursor.shake_effect()
@@ -246,7 +286,11 @@ func _input(event):
 			if event.button_index == 2:
 				
 				cursor.rotate_90()
-				
+		
+		elif cursor_state == CursorState.DELETING:
+			
+			if event.button_index == 1:
+				print("Delete mode")		
 				
 			
 	# Debug Stuff
@@ -256,29 +300,32 @@ func _input(event):
 		
 		if event.scancode == KEY_SPACE:
 			enemy_orchestrator._spawn_enemy()
+			
+		if event.scancode == KEY_Q:
+			print(CursorState.keys()[cursor_state])
+			
+		if event.scancode == KEY_M:
+			_change_money(9000)
 		
 		# Simulate clicking stuff to select blocks
 		if event.scancode == KEY_A:
 			
 			# Select from queue
-			if selected_block != null: return
+			if cursor_state != CursorState.IDLE: return
+			
 			_select_block(_get_next_block())
 		
 		if event.scancode == KEY_S:
 			
-			# Clear Selection and put selected block back in the queue
-			if selected_block == null: return
+			_deselect_block()
 			
-			# The selected block goes back on the queue
-			block_queue.push_front(selected_block)
-			_clear_selection()
 			
 		
 		if event.scancode == KEY_D:
 			
 			# Hold Block
 			
-			var block_selected = selected_block != null
+			var block_selected = cursor_state == CursorState.PLACING
 			var block_held = held_block != null
 			
 			if !block_selected and !block_held: return
@@ -293,8 +340,7 @@ func _input(event):
 			
 			if block_selected and block_held:
 				# Swap selected and held
-				var temp = selected_block
-				_clear_selection()
+				var temp = _clear_selection()
 				_select_block(held_block)
 				held_block = temp
 				emit_signal("held_block_changed", held_block.preview_image)
@@ -305,11 +351,17 @@ func _input(event):
 			if block_selected and !block_held:
 				
 				# Put selected block in held
-				held_block = selected_block
-				_clear_selection()
+				held_block = _clear_selection()
 				emit_signal("held_block_changed", held_block.preview_image)
 		
+		if event.scancode == KEY_W:
 			
+			if cursor_state == CursorState.DELETING:
+				_end_delete()
+			else:
+				_start_delete()
+		
+		
 
 func get_mouse_pos():
 	return camera.get_global_mouse_position()

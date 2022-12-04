@@ -13,6 +13,8 @@ var target_rot: int = 0 # In Degrees
 
 onready var pos_tween = $PosTween
 onready var rot_tween = $RotTween
+
+onready var sprite = $Sprite
 	
 func set_target_pos(new_pos : Vector2):
 	
@@ -86,4 +88,12 @@ func force_complete_tweens():
 	
 	position = target_pos
 	rotation_degrees = target_rot
+
+func show_sprite(new_sprite):
+	sprite.texture = new_sprite
+	sprite.visible = true
+	
+func hide_sprite():
+	sprite.visible = false
+	
 
