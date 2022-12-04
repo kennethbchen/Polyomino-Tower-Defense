@@ -87,6 +87,8 @@ func _select_block(block):
 	# Already selecting a block
 	if cursor_state == CursorState.PLACING: return
 	
+	if cursor_state == CursorState.DELETING: _end_delete()
+	
 	cursor_state = CursorState.PLACING
 	
 	selected_block = block
@@ -319,8 +321,9 @@ func _input(event):
 				# Delete the tower, if found
 				if !hits.empty():
 					hits[0].collider.get_parent().destroy()
+					_change_money(-delete_cost)
 					
-				_change_money(-delete_cost)
+				
 
 				
 				
@@ -342,9 +345,6 @@ func _input(event):
 		# Simulate clicking stuff to select blocks
 		if event.scancode == KEY_A:
 			
-			# Select from queue
-			if cursor_state != CursorState.IDLE: return
-			
 			_select_block(_get_next_block())
 		
 		if event.scancode == KEY_S:
@@ -356,6 +356,8 @@ func _input(event):
 		if event.scancode == KEY_D:
 			
 			# Hold Block
+			
+			if cursor_state == CursorState.DELETING: _end_delete()
 			
 			var block_selected = cursor_state == CursorState.PLACING
 			var block_held = held_block != null
