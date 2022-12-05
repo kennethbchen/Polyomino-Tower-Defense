@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -20,6 +20,9 @@
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Scenes/FloatingText.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Sprites/DeletionCursor.png" type="Texture" id=20]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 128, 36 )
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 2 )
@@ -128,10 +131,20 @@ margin_bottom = -88.0
 
 [node name="WaveStatusDisplay" parent="CanvasLayer/WaveInfo" instance=ExtResource( 17 )]
 
+[node name="HealthDisplay" parent="CanvasLayer" instance=ExtResource( 17 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -256.0
+margin_top = -96.0
+margin_right = 0.0
+margin_bottom = -48.0
+message = "Health: %s"
+
 [node name="MoneyDisplay" parent="CanvasLayer" instance=ExtResource( 17 )]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -256.0
+margin_top = -48.0
 margin_right = 0.0
 message = "Money: %s"
 
@@ -176,6 +189,15 @@ script = ExtResource( 5 )
 position = Vector2( 1024, 0 )
 current = true
 
+[node name="BaseHurtbox" type="Area2D" parent="."]
+position = Vector2( 1024, 352 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BaseHurtbox"]
+position = Vector2( 0, -4 )
+shape = SubResource( 1 )
+
 [node name="Cursor" type="Node2D" parent="."]
 position = Vector2( 1264, -240 )
 z_index = 5
@@ -187,6 +209,7 @@ script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Cursor"]
 
+[connection signal="health_changed" from="." to="CanvasLayer/HealthDisplay" method="_on_state_changed"]
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
 [connection signal="money_amount_changed" from="." to="CanvasLayer/MoneyDisplay" method="_on_state_changed"]
 [connection signal="tower_affordability_changed" from="." to="CanvasLayer/QueueDisplayContainer" method="_on_tower_affordability_changed"]
@@ -195,3 +218,4 @@ script = ExtResource( 4 )
 [connection signal="wave_status_changed" from="EnemyOrchestrator" to="CanvasLayer/WaveInfo/WaveStatusDisplay" method="_on_state_changed"]
 [connection signal="timeout" from="EnemyOrchestrator/WaveTimer" to="EnemyOrchestrator" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
+[connection signal="body_entered" from="BaseHurtbox" to="." method="_on_body_entered_base"]

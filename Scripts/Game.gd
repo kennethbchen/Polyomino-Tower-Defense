@@ -28,7 +28,10 @@ var enemy_start = Vector2(1024, -352)
 var enemy_end = Vector2(1024, 352)
 
 
-# Player Input State
+# Player State
+
+var health = 10
+var money = 8
 
 enum CursorState {IDLE, PLACING, DELETING}
 var cursor_state = CursorState.IDLE
@@ -38,7 +41,6 @@ var held_block: Node2D = null
 var selected_tower: Resource
 
 # Currency Stuff
-var money = 8
 
 var tower_cost = 4
 var delete_cost = 2
@@ -46,6 +48,7 @@ var delete_cost = 2
 var kill_reward = 1
 
 
+signal health_changed(health)
 signal held_block_changed(image)
 signal money_amount_changed(money_amount)
 signal tower_affordability_changed(can_afford)
@@ -57,6 +60,7 @@ func _ready():
 	temp_enemy = load("res://Scenes/Enemy.tscn")
 	
 	emit_signal("money_amount_changed", money)
+	emit_signal("health_changed", health)
 
 func _get_next_block():
 	return block_queue.pop_next_block()
@@ -95,6 +99,11 @@ func _select_block(block):
 	block.init(selected_tower)
 	cursor.add_child(block)
 
+func _select_next_block():
+	
+	if cursor_state == CursorState.PLACING: return
+
+	_select_block(_get_next_block())
 
 func _deselect_block():
 	# Clear Selection and put selected block back in the queue
@@ -344,21 +353,15 @@ func _input(event):
 		
 		# Simulate clicking stuff to select blocks
 		if event.scancode == KEY_A:
-			
-			if cursor_state == CursorState.PLACING: return
-			
-			_select_block(_get_next_block())
+			_select_next_block()
 		
 		if event.scancode == KEY_S:
-			
 			_deselect_block()
 			
-			
-		
 		if event.scancode == KEY_D:
 			
 			# Hold Block
-			
+			# TODO: Move to separate function like the other actions?
 			if cursor_state == CursorState.DELETING: _end_delete()
 			
 			var block_selected = cursor_state == CursorState.PLACING
@@ -410,10 +413,14 @@ func get_quantized_cursor_pos():
 func get_selected_tile():
 	return board.global_to_tile(get_mouse_pos())
 
-
 func _on_enemy_killed():
 	_change_money(kill_reward)
 
-	
-	
-
+func _on_body_entered_base(body):
+	if body is Enemy:
+		health = max(0, health - 1)
+		
+		emit_signal("health_changed", health)
+		
+		if health <= 0:
+			print("ded")

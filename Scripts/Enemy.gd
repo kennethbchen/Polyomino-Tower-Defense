@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Enemy
+
 export var max_health = 4
 export var speed = 40
 export var money_on_kill = 1

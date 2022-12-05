@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Scripts/Enemy.gd"
+}, {
 "base": "Control",
 "class": "QueueDisplay",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/Util.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
 "QueueDisplay": "",
 "TowerProjectile": "",
 "Util": ""
