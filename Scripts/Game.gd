@@ -33,7 +33,7 @@ var enemy_end = Vector2(1024, 352)
 var health = 10
 var money = 8
 
-enum CursorState {IDLE, PLACING, DELETING}
+enum CursorState {IDLE, PLACING, DELETING, DEAD} # Probably should be PlayerState
 var cursor_state = CursorState.IDLE
 
 var selected_block: Node2D = null
@@ -52,6 +52,7 @@ signal health_changed(health)
 signal held_block_changed(image)
 signal money_amount_changed(money_amount)
 signal tower_affordability_changed(can_afford)
+signal player_died()
 
 func _ready():
 	
@@ -59,6 +60,9 @@ func _ready():
 	
 	temp_enemy = load("res://Scenes/Enemy.tscn")
 	
+	_init_ui()
+
+func _init_ui():
 	emit_signal("money_amount_changed", money)
 	emit_signal("health_changed", health)
 
@@ -145,6 +149,9 @@ func _change_money(amount):
 		emit_signal("tower_affordability_changed", false)
 
 func _input(event):
+	
+	if cursor_state == CursorState.DEAD:
+		return
 	
 	if event is InputEventMouseMotion:
 		# Move the cursor
@@ -350,6 +357,9 @@ func _input(event):
 			
 		if event.scancode == KEY_M:
 			_change_money(9000)
+			
+		if event.scancode == KEY_N:
+			_on_player_died()
 		
 		# Simulate clicking stuff to select blocks
 		if event.scancode == KEY_A:
@@ -409,9 +419,24 @@ func get_mouse_pos():
 func get_quantized_cursor_pos():
 	return board.quantize_position(get_mouse_pos())
 
+func _on_canvas_ready():
+	_init_ui()
+
 # Returns tilemap coordinates
 func get_selected_tile():
 	return board.global_to_tile(get_mouse_pos())
+
+func restart_game():
+	get_tree().reload_current_scene()
+
+func _on_player_died():
+	emit_signal("player_died")
+	
+	if cursor_state == CursorState.PLACING:
+		_deselect_block()
+
+	
+	cursor_state = CursorState.DEAD
 
 func _on_enemy_killed():
 	_change_money(kill_reward)
@@ -423,4 +448,5 @@ func _on_body_entered_base(body):
 		emit_signal("health_changed", health)
 		
 		if health <= 0:
-			print("ded")
+			_on_player_died()
+

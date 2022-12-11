@@ -95,3 +95,7 @@ func _on_enemy_destroyed(killed):
 		emit_signal("enemy_killed")
 		
 	enemies_alive = max(0, enemies_alive - 1)
+	
+func _on_player_died():
+	wave_timer.paused = true
+	spawn_timer.paused = true
