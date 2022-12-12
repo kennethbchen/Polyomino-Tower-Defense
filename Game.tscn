@@ -134,6 +134,7 @@ anchor_bottom = 0.0
 margin_top = 36.0
 margin_right = 169.0
 margin_bottom = 95.0
+mouse_filter = 2
 
 [node name="Spacer" type="Label" parent="CanvasLayer/QueueDisplayContainer"]
 margin_top = 99.0
@@ -146,6 +147,7 @@ anchor_bottom = 0.0
 margin_top = 117.0
 margin_right = 169.0
 margin_bottom = 176.0
+mouse_filter = 2
 queue_position = 1
 
 [node name="QueueDisplay3" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
@@ -154,6 +156,7 @@ anchor_bottom = 0.0
 margin_top = 180.0
 margin_right = 169.0
 margin_bottom = 239.0
+mouse_filter = 2
 queue_position = 2
 
 [node name="QueueDisplay4" parent="CanvasLayer/QueueDisplayContainer" instance=ExtResource( 13 )]
@@ -162,6 +165,7 @@ anchor_bottom = 0.0
 margin_top = 243.0
 margin_right = 169.0
 margin_bottom = 302.0
+mouse_filter = 2
 queue_position = 3
 
 [node name="WaveInfo" type="Control" parent="CanvasLayer"]
@@ -258,8 +262,8 @@ script = ExtResource( 4 )
 [connection signal="health_changed" from="." to="CanvasLayer/HealthDisplay" method="_on_state_changed"]
 [connection signal="held_block_changed" from="." to="CanvasLayer/HeldDisplay" method="_on_held_block_changed"]
 [connection signal="money_amount_changed" from="." to="CanvasLayer/MoneyDisplay" method="_on_state_changed"]
-[connection signal="player_died" from="." to="EnemyOrchestrator" method="_on_player_died"]
 [connection signal="player_died" from="." to="CanvasLayer/PopupDialog" method="_on_player_died"]
+[connection signal="player_died" from="." to="EnemyOrchestrator" method="_on_player_died"]
 [connection signal="tower_affordability_changed" from="." to="CanvasLayer/QueueDisplayContainer" method="_on_tower_affordability_changed"]
 [connection signal="ready" from="CanvasLayer" to="." method="_on_canvas_ready"]
 [connection signal="pressed" from="CanvasLayer/PopupDialog/VBoxContainer/PlayAgainButton" to="." method="restart_game"]
