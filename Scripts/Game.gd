@@ -200,6 +200,7 @@ func attempt_place():
 				tower.destroy()
 	
 	_change_money(-tower_cost)
+	_create_floating_text("-$" + str(tower_cost))
 	
 	# The selected block is no longer needed
 	selected_block.queue_free()
@@ -435,9 +436,15 @@ func _on_player_died():
 
 	cursor_state = CursorState.DEAD
 
-func _on_canvas_ready():
-	_init_ui()
-	
+func _on_queue_display_selected():
+	if cursor_state == CursorState.IDLE or cursor_state == CursorState.DELETING:
+		select_next_block()
+	elif cursor_state == CursorState.PLACING:
+		deselect_block()
+		
+func _on_hold_display_selected():
+	attempt_hold()
+
 func _on_enemy_killed():
 	_change_money(kill_reward)
 

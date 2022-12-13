@@ -16,7 +16,7 @@ var wave_count_message = "Wave %s"
 # Wave Parameters
 var wave_cooldown = 25
 var spawn_delay = 0.5
-var enemies_per_round = 10
+var enemies_per_round = 5
 var enemy_health = 4
 var enemy_speed = 40
 
