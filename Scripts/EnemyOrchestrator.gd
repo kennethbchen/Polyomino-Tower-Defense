@@ -67,7 +67,7 @@ func _on_wave_timer_timeout():
 	wave_timer.start(wave_cooldown - 0.001)
 	
 	# Start Spawning Enemies
-	enemies_to_spawn = enemies_per_round
+	enemies_to_spawn += enemies_per_round
 	spawn_timer.start(spawn_delay)
 	
 	emit_signal("wave_count_changed", wave_count_message % wave_count)

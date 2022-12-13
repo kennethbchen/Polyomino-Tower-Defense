@@ -31,16 +31,6 @@ deletetion_cursor = ExtResource( 20 )
 floating_text = ExtResource( 19 )
 tower_physics_layer = 1
 
-[node name="Cursor" type="Node2D" parent="."]
-script = ExtResource( 4 )
-
-[node name="PosTween" type="Tween" parent="Cursor"]
-
-[node name="RotTween" type="Tween" parent="Cursor"]
-
-[node name="Sprite" type="Sprite" parent="Cursor"]
-z_index = 5
-
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="PopupDialog" type="PopupDialog" parent="GUI"]
@@ -190,6 +180,18 @@ margin_right = 128.0
 margin_bottom = -88.0
 
 [node name="WaveStatusDisplay" parent="GUI/WaveInfo" instance=ExtResource( 17 )]
+margin_right = 160.0
+
+[node name="SendWaveNowButton" type="Button" parent="GUI/WaveInfo"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -144.0
+margin_top = -72.0
+margin_right = -16.0
+margin_bottom = -16.0
+text = "Send Wave Now!"
 
 [node name="HealthDisplay" parent="GUI" instance=ExtResource( 17 )]
 anchor_left = 1.0
@@ -258,6 +260,17 @@ script = ExtResource( 5 )
 position = Vector2( 1024, 0 )
 current = true
 
+[node name="Cursor" type="Node2D" parent="."]
+z_index = 5
+script = ExtResource( 4 )
+
+[node name="PosTween" type="Tween" parent="Cursor"]
+
+[node name="RotTween" type="Tween" parent="Cursor"]
+
+[node name="Sprite" type="Sprite" parent="Cursor"]
+z_index = 5
+
 [connection signal="health_changed" from="." to="GUI/HealthDisplay" method="_on_state_changed"]
 [connection signal="held_block_changed" from="." to="GUI/HeldDisplay" method="_on_held_block_changed"]
 [connection signal="money_amount_changed" from="." to="GUI/MoneyDisplay" method="_on_state_changed"]
@@ -267,6 +280,7 @@ current = true
 [connection signal="pressed" from="GUI/PopupDialog/VBoxContainer/PlayAgainButton" to="." method="restart_game"]
 [connection signal="hold_display_selected" from="GUI/HeldDisplay" to="." method="_on_hold_display_selected"]
 [connection signal="queue_display_selected" from="GUI/QueueDisplayContainer" to="." method="_on_queue_display_selected"]
+[connection signal="pressed" from="GUI/WaveInfo/SendWaveNowButton" to="EnemyOrchestrator" method="_on_wave_timer_timeout"]
 [connection signal="body_entered" from="BaseHurtbox" to="." method="_on_body_entered_base"]
 [connection signal="enemy_killed" from="EnemyOrchestrator" to="." method="_on_enemy_killed"]
 [connection signal="wave_count_changed" from="EnemyOrchestrator" to="GUI/WaveInfo/WaveCountDisplay" method="_on_state_changed"]
