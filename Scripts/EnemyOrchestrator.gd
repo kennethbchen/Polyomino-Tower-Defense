@@ -6,8 +6,8 @@ onready var wave_timer = $WaveTimer
 onready var spawn_timer = $SpawnTimer
 
 # Copied from root
-var enemy_start = Vector2(1024, -352)
-var enemy_end = Vector2(1024, 352)
+var enemy_start = Vector2(880, -336)
+var enemy_end = Vector2(1168, 336)
 
 # Wave State Strings
 var wave_countdown_message = "Next Wave In: %ss."

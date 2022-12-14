@@ -24,8 +24,8 @@ export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
 # Enemy Stuff
 var temp_enemy: Resource
 
-var enemy_start = Vector2(1024, -352)
-var enemy_end = Vector2(1024, 352)
+var enemy_start = Vector2(880, -336)
+var enemy_end = Vector2(1168, 336)
 
 # Currency Stuff
 
