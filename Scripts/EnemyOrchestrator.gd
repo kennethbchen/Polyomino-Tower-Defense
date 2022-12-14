@@ -48,10 +48,10 @@ func _on_wave_timer_timeout():
 	
 	# Modify Spawn Parameters
 	if wave_count > 0:
-		enemies_per_round += 2
+		enemies_per_round += 4
 		
 		if wave_count % 4 == 0:
-			enemy_health += 1
+			enemy_health += 2
 		
 		enemy_speed += 2
 	
