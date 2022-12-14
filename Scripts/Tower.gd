@@ -4,7 +4,7 @@ export(PackedScene) var projectile
 
 export(PackedScene) var super_projectile
 
-export var cooldown_time = 2
+export var cooldown_time: float
 
 onready var aim_system = $AimSystem
 

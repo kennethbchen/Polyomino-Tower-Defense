@@ -16,8 +16,8 @@ var wave_count_message = "Wave %s"
 # Wave Parameters
 var wave_cooldown = 25
 var spawn_delay = 0.5
-var enemies_per_round = 5
-var enemy_health = 4
+var enemies_per_round = 2
+var enemy_health = 1
 var enemy_speed = 40
 
 # Wave State
@@ -78,7 +78,7 @@ func _spawn_enemy():
 	new_enemy.init(enemy_start, enemy_end)
 	new_enemy.set_stats(enemy_health, enemy_speed)
 	new_enemy.connect("enemy_destroyed", self, "_on_enemy_destroyed")
-	enemies_to_spawn -= 1
+	enemies_to_spawn = max(0, enemies_to_spawn - 1)
 	enemies_alive += 1
 	
 

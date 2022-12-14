@@ -27,11 +27,18 @@ var temp_enemy: Resource
 var enemy_start = Vector2(1024, -352)
 var enemy_end = Vector2(1024, 352)
 
+# Currency Stuff
+
+var starting_money = 20
+var tower_cost = 12
+var delete_cost = 2
+
+var kill_reward = 1
 
 # Player State
 
 var health = 10
-var money = 8
+var money: int = starting_money
 
 enum CursorState {IDLE, PLACING, DELETING, DEAD} # Probably should be PlayerState
 var cursor_state = CursorState.IDLE
@@ -40,12 +47,7 @@ var selected_block: Node2D = null
 var held_block: Node2D = null
 var selected_tower: Resource
 
-# Currency Stuff
 
-var tower_cost = 4
-var delete_cost = 2
-
-var kill_reward = 1
 
 
 signal health_changed(health)
