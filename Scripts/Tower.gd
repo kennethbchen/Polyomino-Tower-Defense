@@ -4,6 +4,11 @@ export(PackedScene) var projectile
 
 export(PackedScene) var super_projectile
 
+
+export var max_durability: int = 10
+
+var durability: int
+
 export var cooldown_time: float
 
 onready var aim_system = $AimSystem
@@ -28,7 +33,7 @@ func init(pos, board_node):
 	emit_signal("tower_created", position)
 	
 func _ready():
-	pass
+	durability = max_durability
 	
 func _process(delta):
 
@@ -46,6 +51,8 @@ func _process(delta):
 					proj.rotation = aim_system.rotation
 					get_tree().root.add_child(proj)
 					
+					change_durability(-1)
+					
 				else: return
 				
 				if timer.is_stopped():
@@ -58,6 +65,11 @@ func _process(delta):
 				pass
 			
 
+func change_durability(delta):
+	durability = max(0, min(durability + delta, max_durability))
+	
+	if durability <= 0:
+		destroy()
 
 func destroy(super = false):
 	emit_signal("tower_removed", position)
