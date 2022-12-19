@@ -2,7 +2,6 @@ extends Node
 
 export var enemy: PackedScene
 
-onready var wave_timer = $WaveTimer
 onready var spawn_timer = $SpawnTimer
 
 # Copied from root
@@ -20,7 +19,6 @@ var enemies_per_round = 2
 var enemy_health = 1
 var enemy_speed = 35
 
-var min_spawn_delay = 0.5
 var max_health = 8
 var max_speed = 65
 
@@ -54,8 +52,15 @@ func _increment_spawn_parameters():
 	
 	wave_count += 1
 	
+func _spawn_enemy():
+	var new_enemy = enemy.instance()
+	add_child(new_enemy)
+	new_enemy.init(enemy_start, enemy_end)
+	new_enemy.set_stats(enemy_health, enemy_speed)
+	new_enemy.connect("enemy_destroyed", self, "_on_enemy_destroyed")
+	enemies_to_spawn = max(0, enemies_to_spawn - 1)
 
-func _on_wave_timer_timeout():
+func send_wave():
 	
 	_increment_spawn_parameters()
 	
@@ -77,13 +82,7 @@ func _on_wave_timer_timeout():
 	emit_signal("wave_status_changed", "Wave " + str(wave_count) + " active...")
 	
 
-func _spawn_enemy():
-	var new_enemy = enemy.instance()
-	add_child(new_enemy)
-	new_enemy.init(enemy_start, enemy_end)
-	new_enemy.set_stats(enemy_health, enemy_speed)
-	new_enemy.connect("enemy_destroyed", self, "_on_enemy_destroyed")
-	enemies_to_spawn = max(0, enemies_to_spawn - 1)
+
 	
 	
 
@@ -106,5 +105,4 @@ func _on_enemy_destroyed(killed):
 		
 	
 func _on_player_died():
-	wave_timer.paused = true
 	spawn_timer.paused = true
