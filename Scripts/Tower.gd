@@ -4,6 +4,14 @@ export(PackedScene) var projectile
 
 export(PackedScene) var super_projectile
 
+export var max_durability: int = 24
+var durability: int
+
+# durability decreases on each shot
+# display_steps is how many different sprites the tower has to display
+# how low its durability is (example: gets more cracks, breaks down)
+export var display_steps: int = 4
+
 export var cooldown_time: float
 
 onready var aim_system = $AimSystem
@@ -28,7 +36,7 @@ func init(pos, board_node):
 	emit_signal("tower_created", position)
 	
 func _ready():
-	pass
+	durability = max_durability
 	
 func _process(delta):
 
@@ -46,6 +54,8 @@ func _process(delta):
 					proj.rotation = aim_system.rotation
 					get_tree().root.add_child(proj)
 					
+					change_durability(-1)
+					
 				else: return
 				
 				if timer.is_stopped():
@@ -58,6 +68,16 @@ func _process(delta):
 				pass
 			
 
+func change_durability(delta):
+	durability = max(0, min(durability + delta, max_durability))
+	
+	modulate = Color.white.linear_interpolate(Color.black, max(1 - float(get_display_index() + 1) / display_steps, 0.2))
+	
+	if durability <= 0:
+		destroy()
+
+func get_display_index():
+	return int((float(durability) / max_durability) * display_steps)
 
 func destroy(super = false):
 	emit_signal("tower_removed", position)
