@@ -120,7 +120,7 @@ queue_handler_path = NodePath("../../BlockQueueHandler")
 [node name="CostLabel" type="Label" parent="GUI/QueueDisplayContainer"]
 margin_right = 169.0
 margin_bottom = 14.0
-text = "Cost: $4"
+text = "Cost: $12"
 
 [node name="NextLabel" type="Label" parent="GUI/QueueDisplayContainer"]
 margin_top = 18.0
