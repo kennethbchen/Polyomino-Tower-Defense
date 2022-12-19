@@ -18,7 +18,7 @@ var wave_cooldown = 25
 var spawn_delay = 0.5
 var enemies_per_round = 2
 var enemy_health = 1
-var enemy_speed = 40
+var enemy_speed = 35
 
 # Wave State
 var wave_count = 0
@@ -48,7 +48,7 @@ func _on_wave_timer_timeout():
 	
 	# Modify Spawn Parameters
 	if wave_count > 0:
-		enemies_per_round += 4
+		enemies_per_round += 2
 		
 		if wave_count % 4 == 0:
 			enemy_health += 2

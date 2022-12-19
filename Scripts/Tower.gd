@@ -4,7 +4,7 @@ export(PackedScene) var projectile
 
 export(PackedScene) var super_projectile
 
-export var max_durability: int = 20
+export var max_durability: int = 24
 var durability: int
 
 # durability decreases on each shot
@@ -71,7 +71,6 @@ func _process(delta):
 func change_durability(delta):
 	durability = max(0, min(durability + delta, max_durability))
 	
-	print(get_display_index() + 1)
 	modulate = Color.white.linear_interpolate(Color.black, max(1 - float(get_display_index() + 1) / display_steps, 0.2))
 	
 	if durability <= 0:
