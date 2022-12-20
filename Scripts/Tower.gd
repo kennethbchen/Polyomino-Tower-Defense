@@ -45,6 +45,7 @@ func _ready():
 	durability = max_durability
 	
 	range_visual.shape.radius = range_shape.shape.radius
+	hide_range()
 	
 	
 func _process(delta):
