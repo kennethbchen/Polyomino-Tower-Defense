@@ -10,6 +10,9 @@ var health: int
 
 onready var nav_agent = $NavigationAgent2D
 
+onready var sprite = $Sprite
+onready var hit_tween = $HitTween
+
 var destination: Vector2
 
 signal health_changed(current_health, max_health)
@@ -50,8 +53,22 @@ func take_damage(damage):
 	
 	if health <= 0:
 		_destroy(true)
+		
+	show_hit_effect()
 	
 	emit_signal("health_changed", health, max_health)
+
+func show_hit_effect():
+	
+	hit_tween.interpolate_property(sprite.material, "shader_param/weight", 1, 0, 0.35, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	
+	var scale_target = Vector2(0.5, 1.2)
+	var duration = 0.1
+	hit_tween.interpolate_property(sprite, "scale", Vector2(1,1), scale_target, duration, Tween.TRANS_BACK, Tween.EASE_OUT)
+	hit_tween.interpolate_property(sprite, "scale", scale_target, Vector2(1,1), duration, Tween.TRANS_BACK, Tween.EASE_OUT, duration)
+	
+	hit_tween.start()
+
 
 func _destroy(killed=false):
 	
