@@ -18,6 +18,12 @@ onready var aim_system = $AimSystem
 
 onready var timer = $Timer
 
+onready var hitbox = $Hitbox
+
+onready var range_shape = $Range/CollisionShape2D
+
+onready var range_visual = $RangeVisual
+
 # These signals connect with Board.gd to handle pathfinding
 signal tower_created(pos)
 signal tower_removed(pos)
@@ -37,6 +43,9 @@ func init(pos, board_node):
 	
 func _ready():
 	durability = max_durability
+	
+	range_visual.shape.radius = range_shape.shape.radius
+	
 	
 func _process(delta):
 
@@ -97,6 +106,13 @@ func destroy(super = false):
 		
 
 	queue_free()
+
+# Show and hide range are called by Hitbox's signals
+func show_range():
+	range_visual.show()
+	
+func hide_range():
+	range_visual.hide()
 
 func _on_body_entered_range(body: PhysicsBody2D):
 	
