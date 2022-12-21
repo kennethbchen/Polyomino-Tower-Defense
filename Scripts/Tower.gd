@@ -14,6 +14,8 @@ export var display_steps: int = 4
 
 export var cooldown_time: float
 
+onready var sprite = $Sprite
+
 onready var aim_system = $AimSystem
 
 onready var timer = $Timer
@@ -27,6 +29,7 @@ onready var range_visual = $RangeVisual
 # These signals connect with Board.gd to handle pathfinding
 signal tower_created(pos)
 signal tower_removed(pos)
+signal durability_changed(current_durability, max_durability)
 
 var detected_enemies = []
 
@@ -40,12 +43,13 @@ func init(pos, board_node):
 	connect("tower_created", board_node, "_on_tower_created")
 	connect("tower_removed", board_node, "_on_tower_destroyed")
 	emit_signal("tower_created", position)
+	emit_signal("durability_changed", durability, max_durability)
 	
 func _ready():
 	durability = max_durability
 	
 	range_visual.shape.radius = range_shape.shape.radius
-	hide_range()
+	_on_mouse_exited()
 	
 	
 func _process(delta):
@@ -65,6 +69,7 @@ func _process(delta):
 					get_tree().root.add_child(proj)
 					
 					change_durability(-1)
+
 					
 				else: return
 				
@@ -81,10 +86,12 @@ func _process(delta):
 func change_durability(delta):
 	durability = max(0, min(durability + delta, max_durability))
 	
-	modulate = Color.white.linear_interpolate(Color.black, max(1 - float(get_display_index() + 1) / display_steps, 0.2))
+	sprite.modulate = Color.white.linear_interpolate(Color.black, max(1 - float(get_display_index() + 1) / display_steps, 0.2))
 	
 	if durability <= 0:
 		destroy()
+		
+	emit_signal("durability_changed", durability, max_durability)
 
 func get_display_index():
 	return int((float(durability) / max_durability) * display_steps)
@@ -108,11 +115,11 @@ func destroy(super = false):
 
 	queue_free()
 
-# Show and hide range are called by Hitbox's signals
-func show_range():
+# Show info on hover
+func _on_mouse_entered():
 	range_visual.show()
 	
-func hide_range():
+func _on_mouse_exited():
 	range_visual.hide()
 
 func _on_body_entered_range(body: PhysicsBody2D):
