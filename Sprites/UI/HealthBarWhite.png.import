@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Blocks_I.png-31789de93f0c23ba2c938cc79aef079d.stex"
+path="res://.import/HealthBarWhite.png-eeed2509e718586f5127de21f9de5612.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Blocks/Blocks_I.png"
-dest_files=[ "res://.import/Blocks_I.png-31789de93f0c23ba2c938cc79aef079d.stex" ]
+source_file="res://Sprites/UI/HealthBarWhite.png"
+dest_files=[ "res://.import/HealthBarWhite.png-eeed2509e718586f5127de21f9de5612.stex" ]
 
 [params]
 

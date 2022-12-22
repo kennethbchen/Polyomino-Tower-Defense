@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Blocks_Z.png-8e942626d8229450b2741a22b82bd374.stex"
+path="res://.import/UI9-Slice.png-85dcd641ff4ccc09bc44ccd9dc16d158.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Blocks/Blocks_Z.png"
-dest_files=[ "res://.import/Blocks_Z.png-8e942626d8229450b2741a22b82bd374.stex" ]
+source_file="res://Sprites/UI/UI9-Slice.png"
+dest_files=[ "res://.import/UI9-Slice.png-85dcd641ff4ccc09bc44ccd9dc16d158.stex" ]
 
 [params]
 

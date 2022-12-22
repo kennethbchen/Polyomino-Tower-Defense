@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Blocks_L.png-178a817bb5474ee45c09c24b0667e08f.stex"
+path="res://.import/Blocks_J.png-66f2d062ffe3bfb1eac087103491d473.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Blocks/Blocks_L.png"
-dest_files=[ "res://.import/Blocks_L.png-178a817bb5474ee45c09c24b0667e08f.stex" ]
+source_file="res://Sprites/Polyominos/Blocks_J.png"
+dest_files=[ "res://.import/Blocks_J.png-66f2d062ffe3bfb1eac087103491d473.stex" ]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/BlockBase.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Sprites/Blocks/Blocks_Z.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Polyominos/Blocks_Z.png" type="Texture" id=2]
 
 [node name="ZPiece" instance=ExtResource( 1 )]
 preview_image = ExtResource( 2 )

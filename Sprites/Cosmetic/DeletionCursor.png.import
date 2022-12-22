@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HealthBarWhite.png-404c31ede214424f60b9aee663a83d6c.stex"
+path="res://.import/DeletionCursor.png-05192c9db4f52a3f8a2bd58064c56108.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/HealthBarWhite.png"
-dest_files=[ "res://.import/HealthBarWhite.png-404c31ede214424f60b9aee663a83d6c.stex" ]
+source_file="res://Sprites/Cosmetic/DeletionCursor.png"
+dest_files=[ "res://.import/DeletionCursor.png-05192c9db4f52a3f8a2bd58064c56108.stex" ]
 
 [params]
 

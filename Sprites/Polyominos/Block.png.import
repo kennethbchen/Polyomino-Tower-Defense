@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Wall.png-c1e6c8a44733b40234aae37bb1bf51ff.stex"
+path="res://.import/Block.png-ca702e5c2ce042ead69cff4ee5014cf8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Wall.png"
-dest_files=[ "res://.import/Wall.png-c1e6c8a44733b40234aae37bb1bf51ff.stex" ]
+source_file="res://Sprites/Polyominos/Block.png"
+dest_files=[ "res://.import/Block.png-ca702e5c2ce042ead69cff4ee5014cf8.stex" ]
 
 [params]
 

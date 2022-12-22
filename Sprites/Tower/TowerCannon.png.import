@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TowerProjectile.png-563bad2fb7ecb7eea9d0d959a30daff0.stex"
+path="res://.import/TowerCannon.png-74b6b414e6b0cc3f4d4cfea63e0eb3f4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TowerProjectile.png"
-dest_files=[ "res://.import/TowerProjectile.png-563bad2fb7ecb7eea9d0d959a30daff0.stex" ]
+source_file="res://Sprites/Tower/TowerCannon.png"
+dest_files=[ "res://.import/TowerCannon.png-74b6b414e6b0cc3f4d4cfea63e0eb3f4.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/UIDraft.png-d15a79e7b7e2e9656b5d6e58eb340d32.stex"
+path="res://.import/BackgroundOOB.png-5e5a3c4f9547979f6562c6815fb2e3ce.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Aseprite/UIDraft.png"
-dest_files=[ "res://.import/UIDraft.png-d15a79e7b7e2e9656b5d6e58eb340d32.stex" ]
+source_file="res://Sprites/Cosmetic/BackgroundOOB.png"
+dest_files=[ "res://.import/BackgroundOOB.png-5e5a3c4f9547979f6562c6815fb2e3ce.stex" ]
 
 [params]
 

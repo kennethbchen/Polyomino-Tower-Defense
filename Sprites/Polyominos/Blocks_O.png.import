@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/DeletionCursor.png-b1ef031afaf8a2d2e108f354cbc412ec.stex"
+path="res://.import/Blocks_O.png-800cceb10a88ba5407c4d15665da9a28.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/DeletionCursor.png"
-dest_files=[ "res://.import/DeletionCursor.png-b1ef031afaf8a2d2e108f354cbc412ec.stex" ]
+source_file="res://Sprites/Polyominos/Blocks_O.png"
+dest_files=[ "res://.import/Blocks_O.png-800cceb10a88ba5407c4d15665da9a28.stex" ]
 
 [params]
 

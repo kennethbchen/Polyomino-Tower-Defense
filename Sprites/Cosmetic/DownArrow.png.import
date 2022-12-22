@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Blocks_S.png-a949dfba1b4b81a9c2eb4db1e2e4f230.stex"
+path="res://.import/DownArrow.png-5f85e0607b99646fa04ad2419fe89c3f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Blocks/Blocks_S.png"
-dest_files=[ "res://.import/Blocks_S.png-a949dfba1b4b81a9c2eb4db1e2e4f230.stex" ]
+source_file="res://Sprites/Cosmetic/DownArrow.png"
+dest_files=[ "res://.import/DownArrow.png-5f85e0607b99646fa04ad2419fe89c3f.stex" ]
 
 [params]
 

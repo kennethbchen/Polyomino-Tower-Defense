@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Sprites/Tower.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Tower/Tower.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Tower.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/AimSystem.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/SuperTowerProjectile.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Sprites/TowerCannon.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Tower/TowerCannon.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/TowerProjectile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scripts/Lib/ShapePolygon2D.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/HealthBar.tscn" type="PackedScene" id=8]
