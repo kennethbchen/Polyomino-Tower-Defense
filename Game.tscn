@@ -84,35 +84,35 @@ text = "Play Again"
 [node name="HeldDisplay" type="Control" parent="GUI"]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 88.0
+margin_left = 64.0
 margin_top = -108.0
-margin_right = 216.0
-margin_bottom = -12.0
+margin_right = 256.0
+margin_bottom = 20.0
 theme = ExtResource( 22 )
 script = ExtResource( 16 )
 
 [node name="Panel" type="Panel" parent="GUI/HeldDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -24.0
-margin_top = -32.0
-margin_right = 24.0
-margin_bottom = 32.0
 theme = ExtResource( 22 )
 
 [node name="ContentContainer" type="VBoxContainer" parent="GUI/HeldDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
 theme = ExtResource( 22 )
 
 [node name="HeldLabel" type="Label" parent="GUI/HeldDisplay/ContentContainer"]
-margin_right = 128.0
+margin_right = 176.0
 margin_bottom = 24.0
 text = "Held:"
 
 [node name="Display" type="TextureRect" parent="GUI/HeldDisplay/ContentContainer"]
 margin_top = 28.0
-margin_right = 128.0
+margin_right = 176.0
 margin_bottom = 28.0
 
 [node name="QueueDisplayContainer" type="VBoxContainer" parent="GUI"]
@@ -181,27 +181,31 @@ queue_position = 3
 [node name="WaveInfo" type="Control" parent="GUI"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -184.0
+margin_left = 8.0
+margin_top = -216.0
 margin_right = 320.0
+margin_bottom = -8.0
 theme = ExtResource( 22 )
 
 [node name="WaveCountDisplay" parent="GUI/WaveInfo" instance=ExtResource( 17 )]
-margin_right = -136.0
-margin_bottom = -96.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 128.0
+margin_bottom = 50.0
 
 [node name="WaveStatusDisplay" parent="GUI/WaveInfo" instance=ExtResource( 17 )]
-margin_top = 96.0
-margin_right = -136.0
+anchor_top = 0.5
+anchor_right = 0.0
+anchor_bottom = 0.5
+margin_top = -44.0
+margin_right = 256.0
+margin_bottom = 44.0
 
 [node name="SendWaveNowButton" type="Button" parent="GUI/WaveInfo"]
-anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -128.0
-margin_top = -64.0
-margin_right = 38.0
-margin_bottom = -26.0
+margin_top = -38.0
+margin_right = 166.0
 text = "Send Next Wave"
 
 [node name="HealthDisplay" parent="GUI" instance=ExtResource( 17 )]
