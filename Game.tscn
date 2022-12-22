@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Scenes/FloatingText.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Sprites/DeletionCursor.png" type="Texture" id=20]
 [ext_resource path="res://Scripts/DeathScreen.gd" type="Script" id=21]
+[ext_resource path="res://Theme.tres" type="Theme" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 36 )
@@ -43,6 +44,7 @@ margin_left = -184.0
 margin_top = -140.0
 margin_right = 184.0
 margin_bottom = 140.0
+theme = ExtResource( 22 )
 popup_exclusive = true
 script = ExtResource( 21 )
 
@@ -86,15 +88,22 @@ margin_left = 88.0
 margin_top = -108.0
 margin_right = 216.0
 margin_bottom = -12.0
+theme = ExtResource( 22 )
 script = ExtResource( 16 )
 
 [node name="Panel" type="Panel" parent="GUI/HeldDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -29.0
+margin_right = 24.0
+margin_bottom = 29.0
+theme = ExtResource( 22 )
 
 [node name="ContentContainer" type="VBoxContainer" parent="GUI/HeldDisplay"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 22 )
 
 [node name="HeldLabel" type="Label" parent="GUI/HeldDisplay/ContentContainer"]
 margin_right = 128.0
@@ -110,21 +119,22 @@ margin_bottom = 18.0
 anchor_left = 0.763
 anchor_right = 1.0
 anchor_bottom = 0.52
-margin_left = -39.9359
+margin_left = -13.312
 margin_top = 24.0
-margin_right = -113.0
-margin_bottom = 14.0
+margin_right = -96.0
+margin_bottom = 69.0
+theme = ExtResource( 22 )
 script = ExtResource( 14 )
 queue_handler_path = NodePath("../../BlockQueueHandler")
 
 [node name="CostLabel" type="Label" parent="GUI/QueueDisplayContainer"]
-margin_right = 169.0
+margin_right = 160.0
 margin_bottom = 14.0
 text = "Cost: $12"
 
 [node name="NextLabel" type="Label" parent="GUI/QueueDisplayContainer"]
 margin_top = 18.0
-margin_right = 169.0
+margin_right = 160.0
 margin_bottom = 32.0
 text = "Next:"
 
@@ -132,39 +142,39 @@ text = "Next:"
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 36.0
-margin_right = 169.0
-margin_bottom = 95.0
+margin_right = 160.0
+margin_bottom = 108.0
 mouse_filter = 2
 
 [node name="Spacer" type="Label" parent="GUI/QueueDisplayContainer"]
-margin_top = 99.0
-margin_right = 169.0
-margin_bottom = 113.0
+margin_top = 112.0
+margin_right = 160.0
+margin_bottom = 126.0
 
 [node name="QueueDisplay2" parent="GUI/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 117.0
-margin_right = 169.0
-margin_bottom = 176.0
+margin_top = 130.0
+margin_right = 160.0
+margin_bottom = 203.0
 mouse_filter = 2
 queue_position = 1
 
 [node name="QueueDisplay3" parent="GUI/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 180.0
-margin_right = 169.0
-margin_bottom = 239.0
+margin_top = 207.0
+margin_right = 160.0
+margin_bottom = 280.0
 mouse_filter = 2
 queue_position = 2
 
 [node name="QueueDisplay4" parent="GUI/QueueDisplayContainer" instance=ExtResource( 13 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 243.0
-margin_right = 169.0
-margin_bottom = 302.0
+margin_top = 284.0
+margin_right = 160.0
+margin_bottom = 357.0
 mouse_filter = 2
 queue_position = 3
 
@@ -173,11 +183,12 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -184.0
 margin_right = 320.0
+theme = ExtResource( 22 )
 
 [node name="WaveCountDisplay" parent="GUI/WaveInfo" instance=ExtResource( 17 )]
-margin_top = -176.0
+margin_top = -184.0
 margin_right = 128.0
-margin_bottom = -88.0
+margin_bottom = -96.0
 
 [node name="WaveStatusDisplay" parent="GUI/WaveInfo" instance=ExtResource( 17 )]
 margin_right = 176.0
@@ -200,9 +211,10 @@ text = "Send Next Wave"
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -256.0
-margin_top = -96.0
+margin_top = -104.0
 margin_right = 0.0
-margin_bottom = -48.0
+margin_bottom = -56.0
+theme = ExtResource( 22 )
 message = "Health: %s"
 
 [node name="MoneyDisplay" parent="GUI" instance=ExtResource( 17 )]
@@ -211,6 +223,7 @@ anchor_right = 1.0
 margin_left = -256.0
 margin_top = -48.0
 margin_right = 0.0
+theme = ExtResource( 22 )
 message = "Money: %s"
 
 [node name="BaseHurtbox" type="Area2D" parent="."]
