@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Tileset_Cosmetic.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -23,7 +23,6 @@
 [ext_resource path="res://Scripts/DeathScreen.gd" type="Script" id=21]
 [ext_resource path="res://Theme.tres" type="Theme" id=22]
 [ext_resource path="res://Tileset_Data.tres" type="TileSet" id=23]
-[ext_resource path="res://Scripts/TempText.gd" type="Script" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 36 )
@@ -184,45 +183,27 @@ queue_position = 3
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
-margin_top = -216.0
-margin_right = 320.0
+margin_top = -120.0
+margin_right = 200.0
 margin_bottom = -8.0
 theme = ExtResource( 22 )
 
 [node name="WaveStatusDisplay" parent="GUI/WaveInfo" instance=ExtResource( 17 )]
-anchor_top = 1.0
-anchor_right = 0.0
-margin_top = -112.0
-margin_right = 184.0
-margin_bottom = -48.0
-
-[node name="TempText" type="Control" parent="GUI/WaveInfo"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -112.0
-margin_right = 184.0
-margin_bottom = -48.0
-script = ExtResource( 24 )
-
-[node name="Panel" type="Panel" parent="GUI/WaveInfo/TempText"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="Label" type="Label" parent="GUI/WaveInfo/TempText"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-margin_bottom = -8.0
-text = "Click \"Send Next Wave\" to begin"
-autowrap = true
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -92.0
+margin_right = 92.0
+margin_bottom = 64.0
 
 [node name="SendWaveNowButton" type="Button" parent="GUI/WaveInfo"]
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+margin_left = -84.0
 margin_top = -38.0
-margin_right = 166.0
+margin_right = 84.0
 text = "Send Next Wave"
 
 [node name="HealthDisplay" parent="GUI" instance=ExtResource( 17 )]
@@ -306,7 +287,6 @@ z_index = 5
 [connection signal="pressed" from="GUI/PopupDialog/VBoxContainer/PlayAgainButton" to="." method="restart_game"]
 [connection signal="hold_display_selected" from="GUI/HeldDisplay" to="." method="_on_hold_display_selected"]
 [connection signal="queue_display_selected" from="GUI/QueueDisplayContainer" to="." method="_on_queue_display_selected"]
-[connection signal="pressed" from="GUI/WaveInfo/SendWaveNowButton" to="GUI/WaveInfo/TempText" method="_hide"]
 [connection signal="pressed" from="GUI/WaveInfo/SendWaveNowButton" to="EnemyOrchestrator" method="send_wave"]
 [connection signal="body_entered" from="BaseHurtbox" to="." method="_on_body_entered_base"]
 [connection signal="enemy_killed" from="EnemyOrchestrator" to="." method="_on_enemy_killed"]
