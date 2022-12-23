@@ -34,8 +34,7 @@ signal enemy_killed()
 
 func _ready():
 	emit_signal("wave_count_changed", wave_count_message % wave_count)
-	
-	emit_signal("wave_status_changed", "Click \"Send Next Wave\" to begin")
+
 	
 func _process(delta):
 	pass
