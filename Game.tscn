@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Tileset_Cosmetic.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -24,6 +24,9 @@
 [ext_resource path="res://Theme.tres" type="Theme" id=22]
 [ext_resource path="res://Tileset_Data.tres" type="TileSet" id=23]
 [ext_resource path="res://Scenes/AudioStreamManager.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Audio/blockPlace.wav" type="AudioStream" id=25]
+[ext_resource path="res://Audio/playerHurt.wav" type="AudioStream" id=26]
+[ext_resource path="res://Audio/playerDeath.wav" type="AudioStream" id=27]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 36 )
@@ -33,6 +36,12 @@ script = ExtResource( 2 )
 deletetion_cursor = ExtResource( 20 )
 floating_text = ExtResource( 19 )
 tower_physics_layer = 1
+place_sound = ExtResource( 25 )
+player_hurt_sound = ExtResource( 26 )
+player_death_sound = ExtResource( 27 )
+
+[node name="PlayerAudioStreamManager" parent="." instance=ExtResource( 24 )]
+bus = "Player"
 
 [node name="GUI" type="CanvasLayer" parent="."]
 

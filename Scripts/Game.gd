@@ -14,12 +14,17 @@ onready var block_queue = $BlockQueueHandler
 
 onready var enemy_orchestrator = $EnemyOrchestrator
 
+onready var player_audio_manager = $PlayerAudioStreamManager
+
 export var deletetion_cursor: Texture
 
 export(PackedScene) var floating_text
 
 export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
 
+export var place_sound: Resource
+export var player_hurt_sound: Resource
+export var player_death_sound: Resource
 
 # Enemy Stuff
 var temp_enemy: Resource
@@ -203,6 +208,8 @@ func attempt_place():
 	
 	_change_money(-tower_cost)
 	_create_floating_text("-$" + str(tower_cost))
+	player_audio_manager.play(place_sound)
+	
 	
 	# The selected block is no longer needed
 	selected_block.queue_free()
@@ -433,6 +440,8 @@ func restart_game():
 func _on_player_died():
 	emit_signal("player_died")
 	
+	player_audio_manager.play(player_death_sound)
+	
 	if cursor_state == CursorState.PLACING:
 		deselect_block()
 
@@ -451,11 +460,15 @@ func _on_enemy_killed():
 	_change_money(kill_reward)
 
 func _on_body_entered_base(body):
-	if body is Enemy:
+	if body is Enemy and health > 0:
 		health = max(0, health - 1)
 		
 		emit_signal("health_changed", health)
 		
+		
+		
 		if health <= 0:
 			_on_player_died()
+		else:
+			player_audio_manager.play(player_hurt_sound)
 
