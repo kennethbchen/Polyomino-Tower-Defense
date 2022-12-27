@@ -263,12 +263,14 @@ func attempt_delete():
 	if money < delete_cost: 
 		cursor.shake_effect()
 		_create_floating_text("Not Enough Money!")
+		player_audio_manager.play(block_failed_sound)
 		
 		return # Not enough money	
 	
 	if !board.is_in_board(board.global_to_tile(get_mouse_pos())):
 		cursor.shake_effect()
 		_create_floating_text("Out of Bounds!")
+		player_audio_manager.play(block_failed_sound)
 			
 		return # Not enough money	
 	
