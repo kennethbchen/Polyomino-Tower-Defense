@@ -8,6 +8,8 @@ export var money_on_kill = 1
 
 export(Array, Resource) var hit_sounds
 
+export var kill_sound: Resource
+
 var health: int
 
 onready var nav_agent = $NavigationAgent2D
@@ -20,7 +22,7 @@ var destination: Vector2
 var rand = RandomNumberGenerator.new()
 
 signal health_changed(current_health, max_health)
-signal hit(sound)
+signal sound_played(sound)
 
 # Enemies that were shot by towers 
 # and had their HP reach 0 were killed, otherwise they were not
@@ -68,7 +70,7 @@ func take_damage(damage):
 
 func _on_hit():
 	show_hit_effect()
-	emit_signal("hit", hit_sounds[rand.randi_range(0, hit_sounds.size() - 1)])
+	emit_signal("sound_played", hit_sounds[rand.randi_range(0, hit_sounds.size() - 1)])
 
 func show_hit_effect():
 	
@@ -84,6 +86,7 @@ func show_hit_effect():
 
 func _destroy(killed=false):
 	
+	emit_signal("sound_played", kill_sound)
 	emit_signal("enemy_destroyed", killed)
 	queue_free()
 
