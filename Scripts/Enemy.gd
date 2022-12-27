@@ -6,6 +6,8 @@ export var max_health = 4
 export var speed = 40
 export var money_on_kill = 1
 
+export(Array, Resource) var hit_sounds
+
 var health: int
 
 onready var nav_agent = $NavigationAgent2D
@@ -15,7 +17,10 @@ onready var hit_tween = $HitTween
 
 var destination: Vector2
 
+var rand = RandomNumberGenerator.new()
+
 signal health_changed(current_health, max_health)
+signal hit(sound)
 
 # Enemies that were shot by towers 
 # and had their HP reach 0 were killed, otherwise they were not
@@ -24,6 +29,7 @@ signal enemy_destroyed(was_killed)
 
 func _ready():
 	health = max_health
+	rand.randomize()
 
 func init(start_pos, end_pos):
 	position = start_pos
@@ -54,9 +60,15 @@ func take_damage(damage):
 	if health <= 0:
 		_destroy(true)
 		
-	show_hit_effect()
+	
 	
 	emit_signal("health_changed", health, max_health)
+	
+	_on_hit()
+
+func _on_hit():
+	show_hit_effect()
+	emit_signal("hit", hit_sounds[rand.randi_range(0, hit_sounds.size() - 1)])
 
 func show_hit_effect():
 	

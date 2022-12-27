@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Tileset_Cosmetic.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Scripts/DeathScreen.gd" type="Script" id=21]
 [ext_resource path="res://Theme.tres" type="Theme" id=22]
 [ext_resource path="res://Tileset_Data.tres" type="TileSet" id=23]
+[ext_resource path="res://Scenes/AudioStreamManager.tscn" type="PackedScene" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 36 )
@@ -235,6 +236,10 @@ blocks = [ ExtResource( 7 ), ExtResource( 12 ), ExtResource( 10 ), ExtResource( 
 [node name="EnemyOrchestrator" type="Node" parent="."]
 script = ExtResource( 15 )
 enemy = ExtResource( 18 )
+
+[node name="AudioStreamManager" parent="EnemyOrchestrator" instance=ExtResource( 24 )]
+num_players = 14
+bus = "Enemy"
 
 [node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
 
