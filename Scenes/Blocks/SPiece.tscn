@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/BlockBase.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Sprites/Blocks/Blocks_S.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Aseprite/Sprites_Slices/S.png" type="Texture" id=2]
 
 [node name="SPiece" instance=ExtResource( 1 )]
 preview_image = ExtResource( 2 )

@@ -4,7 +4,7 @@ var tower: Resource
 
 export var preview_image: Texture
 
-export var block_texture: Texture = load("res://Sprites/Blocks/Block.png")
+export var block_texture: Texture = load("res://Sprites/Aseprite/Sprites_Slices/Base.png")
 
 
 func init(tower_res: Resource):
