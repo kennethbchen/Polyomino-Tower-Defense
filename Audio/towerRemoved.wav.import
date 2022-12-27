@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/blockPlace.wav-7e98e48460e12c7caaffd3b5e5260daf.sample"
+path="res://.import/towerRemoved.wav-7115ab5e89f77c49051250b49a150962.sample"
 
 [deps]
 
-source_file="res://Audio/blockPlace.wav"
-dest_files=[ "res://.import/blockPlace.wav-7e98e48460e12c7caaffd3b5e5260daf.sample" ]
+source_file="res://Audio/towerRemoved.wav"
+dest_files=[ "res://.import/towerRemoved.wav-7115ab5e89f77c49051250b49a150962.sample" ]
 
 [params]
 

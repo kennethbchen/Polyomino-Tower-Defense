@@ -22,9 +22,13 @@ export(PackedScene) var floating_text
 
 export(int, LAYERS_2D_PHYSICS) var tower_physics_layer
 
-export var place_sound: Resource
+export var tower_removed_sound: Resource
+export var block_failed_sound: Resource
+export var block_place_sound: Resource
+export var block_rotate_sound: Resource
 export var player_hurt_sound: Resource
 export var player_death_sound: Resource
+export var player_select_sound: Resource
 
 # Enemy Stuff
 var temp_enemy: Resource
@@ -93,6 +97,7 @@ func attempt_place():
 	if !board.is_in_board(get_selected_tile()): 
 		cursor.shake_effect()
 		_create_floating_text("Out Of Bounds!")
+		player_audio_manager.play(block_failed_sound)
 		return # Cursor can't be out of bounds
 		
 	
@@ -104,16 +109,19 @@ func attempt_place():
 		if !board.is_in_board(board.global_to_tile(pos)): 
 			cursor.shake_effect()
 			_create_floating_text("Out Of Bounds!")
+			player_audio_manager.play(block_failed_sound)
 			return
 		
 		if !board.is_walkable_tile(board.global_to_tile(pos)):
 			cursor.shake_effect()
 			_create_floating_text("Space Occupied!")
+			player_audio_manager.play(block_failed_sound)
 			return # Some block is out of bounds
 	
 	if money < tower_cost: 
 		cursor.shake_effect()
 		_create_floating_text("Not Enough Money!")
+		player_audio_manager.play(block_failed_sound)
 		
 		return # Not enough money
 	
@@ -147,6 +155,7 @@ func attempt_place():
 			# Fail to place
 			cursor.shake_effect()
 			_create_floating_text("Blocks Path!")
+			player_audio_manager.play(block_failed_sound)
 			return
 	
 	# Block placement can happen at this point
@@ -165,7 +174,7 @@ func attempt_place():
 		var new_tower = selected_tower.instance()
 		add_child(new_tower)
 		new_tower.init(board.quantize_position(pos) + cell_offset, board)
-		
+		new_tower.connect("tower_removed", self, "_on_tower_removed")
 		if clears_line:
 			towers_to_delete.append(new_tower)
 		
@@ -208,7 +217,7 @@ func attempt_place():
 	
 	_change_money(-tower_cost)
 	_create_floating_text("-$" + str(tower_cost))
-	player_audio_manager.play(place_sound)
+	player_audio_manager.play(block_place_sound)
 	
 	
 	# The selected block is no longer needed
@@ -319,7 +328,9 @@ func _unhandled_input(event):
 		
 		if event.is_action_pressed("game_deselect"): deselect_block()
 		
-		if event.is_action_pressed("game_rotate"): cursor.rotate_90()
+		if event.is_action_pressed("game_rotate"): 
+			player_audio_manager.play(block_rotate_sound)
+			cursor.rotate_90()
 			
 		if event.is_action_pressed("game_hold"): attempt_hold()
 		
@@ -458,6 +469,9 @@ func _on_hold_display_selected():
 
 func _on_enemy_killed():
 	_change_money(kill_reward)
+	
+func _on_tower_removed(position):
+	player_audio_manager.play(tower_removed_sound)
 
 func _on_body_entered_base(body):
 	if body is Enemy and health > 0:

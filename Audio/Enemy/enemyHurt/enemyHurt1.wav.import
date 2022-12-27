@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/enemyHurt1.wav-a79871ada4725291e02425a343ccea99.sample"
+path="res://.import/enemyHurt1.wav-546e58585dc73fc6e59320e2cc93a2c5.sample"
 
 [deps]
 
-source_file="res://Audio/enemyHurt/enemyHurt1.wav"
-dest_files=[ "res://.import/enemyHurt1.wav-a79871ada4725291e02425a343ccea99.sample" ]
+source_file="res://Audio/Enemy/enemyHurt/enemyHurt1.wav"
+dest_files=[ "res://.import/enemyHurt1.wav-546e58585dc73fc6e59320e2cc93a2c5.sample" ]
 
 [params]
 

@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/playerHurt.wav-dbc1411e83ebbbba7f2d1d423a89cf19.sample"
+path="res://.import/blockRotate.wav-225fe47b3dc95836a68e602ab140ff7f.sample"
 
 [deps]
 
-source_file="res://Audio/playerHurt.wav"
-dest_files=[ "res://.import/playerHurt.wav-dbc1411e83ebbbba7f2d1d423a89cf19.sample" ]
+source_file="res://Audio/Block/blockRotate.wav"
+dest_files=[ "res://.import/blockRotate.wav-225fe47b3dc95836a68e602ab140ff7f.sample" ]
 
 [params]
 

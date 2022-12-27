@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/enemyKill.wav-7a1e8a3f70febeddb899e27c8cf8db7f.sample"
+path="res://.import/blockPlace.wav-61c0e6ad01cde6b38d1dc9702fdac404.sample"
 
 [deps]
 
-source_file="res://Audio/enemyKill/enemyKill.wav"
-dest_files=[ "res://.import/enemyKill.wav-7a1e8a3f70febeddb899e27c8cf8db7f.sample" ]
+source_file="res://Audio/Block/blockPlace.wav"
+dest_files=[ "res://.import/blockPlace.wav-61c0e6ad01cde6b38d1dc9702fdac404.sample" ]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Tileset_Cosmetic.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -24,9 +24,12 @@
 [ext_resource path="res://Theme.tres" type="Theme" id=22]
 [ext_resource path="res://Tileset_Data.tres" type="TileSet" id=23]
 [ext_resource path="res://Scenes/AudioStreamManager.tscn" type="PackedScene" id=24]
-[ext_resource path="res://Audio/blockPlace.wav" type="AudioStream" id=25]
-[ext_resource path="res://Audio/playerHurt.wav" type="AudioStream" id=26]
-[ext_resource path="res://Audio/playerDeath.wav" type="AudioStream" id=27]
+[ext_resource path="res://Audio/Block/blockPlace.wav" type="AudioStream" id=25]
+[ext_resource path="res://Audio/Player/playerHurt.wav" type="AudioStream" id=26]
+[ext_resource path="res://Audio/Player/playerDeath.wav" type="AudioStream" id=27]
+[ext_resource path="res://Audio/Block/blockRotate.wav" type="AudioStream" id=28]
+[ext_resource path="res://Audio/towerRemoved.wav" type="AudioStream" id=29]
+[ext_resource path="res://Audio/Block/blockFailed.wav" type="AudioStream" id=30]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 36 )
@@ -36,7 +39,10 @@ script = ExtResource( 2 )
 deletetion_cursor = ExtResource( 20 )
 floating_text = ExtResource( 19 )
 tower_physics_layer = 1
-place_sound = ExtResource( 25 )
+tower_removed_sound = ExtResource( 29 )
+block_failed_sound = ExtResource( 30 )
+block_place_sound = ExtResource( 25 )
+block_rotate_sound = ExtResource( 28 )
 player_hurt_sound = ExtResource( 26 )
 player_death_sound = ExtResource( 27 )
 
