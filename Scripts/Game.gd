@@ -16,6 +16,8 @@ onready var enemy_orchestrator = $EnemyOrchestrator
 
 onready var player_audio_manager = $PlayerAudioStreamManager
 
+onready var screen_shake_handler = $ScreenShakeHandler
+
 export var deletetion_cursor: Texture
 
 export(PackedScene) var floating_text
@@ -481,7 +483,7 @@ func _on_body_entered_base(body):
 		
 		emit_signal("health_changed", health)
 		
-		
+		screen_shake_handler.apply_random_shake()
 		
 		if health <= 0:
 			_on_player_died()
