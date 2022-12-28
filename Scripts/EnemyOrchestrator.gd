@@ -4,6 +4,8 @@ export var enemy: PackedScene
 
 onready var spawn_timer = $SpawnTimer
 
+onready var enemy_audio_manager = $AudioStreamManager
+
 # Copied from root
 var enemy_start = Vector2(880, -336)
 var enemy_end = Vector2(1168, 336)
@@ -16,7 +18,7 @@ var wave_count_message = "Wave %s"
 var wave_cooldown = 25
 var spawn_delay = 0.75
 var enemies_per_round = 2
-var enemy_health = 1
+var enemy_health = 2
 var enemy_speed = 35
 
 var max_health = 8
@@ -45,7 +47,7 @@ func _increment_spawn_parameters():
 	if wave_count > 0:
 		enemies_per_round += 2
 		
-		if wave_count % 4 == 0:
+		if wave_count % 4 == 0 and wave_count > 6:
 			enemy_health = min(enemy_health + 2, max_health)
 		
 		enemy_speed = min(enemy_speed + 2, max_speed)
@@ -58,6 +60,7 @@ func _spawn_enemy():
 	new_enemy.init(enemy_start, enemy_end)
 	new_enemy.set_stats(enemy_health, enemy_speed)
 	new_enemy.connect("enemy_destroyed", self, "_on_enemy_destroyed")
+	new_enemy.connect("sound_played", enemy_audio_manager, "play")
 	enemies_to_spawn = max(0, enemies_to_spawn - 1)
 
 func send_wave():

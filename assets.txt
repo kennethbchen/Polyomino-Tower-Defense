@@ -1,1 +1,11 @@
-https://www.kenney.nl/assets/kenney-fonts
+https://www.kenney.nl/assets/kenney-fonts - Fonts
+
+sfxr.me - Sound Effects
+
+https://github.com/theshaggydev/the-shaggy-dev-projects/blob/main/projects/godot-3/screen-shake/sample_scene.gd - Screen Shake Code
+
+https://kidscancode.org/godot_recipes/3.x/audio/audio_manager/ - Audio Stream Manager Code
+
+https://gist.github.com/cgbeutler/9d4134e7937b211927f969c0ad3b01f0#file-shapepolygon2d-gd - Shape Polygon Code
+
+Game Endeavor (https://youtu.be/dqilJirAAT0) - Hit Flash Shader Code
