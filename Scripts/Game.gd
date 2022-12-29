@@ -6,7 +6,7 @@ var cell_offset = Vector2(cell_size / 2, cell_size / 2)
 
 onready var camera = $Camera2D
 
-onready var cursor = $Cursor
+onready var cursor = $CursorLayer/Cursor
 
 onready var board = $BoardData
 

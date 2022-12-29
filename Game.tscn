@@ -58,6 +58,22 @@ SHAKE_DECAY_RATE = 5.0
 num_players = 16
 bus = "Player"
 
+[node name="CursorLayer" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enable = true
+
+[node name="Cursor" type="Node2D" parent="CursorLayer"]
+position = Vector2( 1280, 368 )
+z_index = 5
+script = ExtResource( 4 )
+
+[node name="PosTween" type="Tween" parent="CursorLayer/Cursor"]
+
+[node name="RotTween" type="Tween" parent="CursorLayer/Cursor"]
+
+[node name="Sprite" type="Sprite" parent="CursorLayer/Cursor"]
+z_index = 5
+
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="PopupDialog" type="PopupDialog" parent="GUI"]
@@ -376,18 +392,6 @@ script = ExtResource( 5 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 1024, 0 )
 current = true
-
-[node name="Cursor" type="Node2D" parent="."]
-position = Vector2( 1280, 368 )
-z_index = 5
-script = ExtResource( 4 )
-
-[node name="PosTween" type="Tween" parent="Cursor"]
-
-[node name="RotTween" type="Tween" parent="Cursor"]
-
-[node name="Sprite" type="Sprite" parent="Cursor"]
-z_index = 5
 
 [connection signal="delete_state_changed" from="." to="GUI/LeftSide/Control/VBoxContainer/DeleteButton" method="_on_delete_state_changed"]
 [connection signal="health_changed" from="." to="GUI/RightSide/VBoxContainer/HealthDisplay" method="_on_state_changed"]
