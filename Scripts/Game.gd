@@ -65,6 +65,7 @@ signal health_changed(health)
 signal held_block_changed(image)
 signal money_amount_changed(money_amount)
 signal tower_affordability_changed(can_afford)
+signal delete_state_changed(enabled)
 signal player_died()
 
 func _ready():
@@ -290,6 +291,9 @@ func attempt_delete():
 	if !hits.empty():
 		hits[0].collider.get_parent().destroy()
 		_change_money(-delete_cost)
+		_create_floating_text("-$" + str(delete_cost))
+		
+	
 
 func toggle_delete_mode():
 	if cursor_state == CursorState.DELETING:
@@ -421,11 +425,13 @@ func _start_delete_mode():
 	cursor.show_sprite(deletetion_cursor)
 	
 	cursor_state = CursorState.DELETING
+	emit_signal("delete_state_changed", true)
 
 func _end_delete_mode():
 	cursor.hide_sprite()
 	
 	cursor_state = CursorState.IDLE
+	emit_signal("delete_state_changed", false)
 
 func _change_money(amount):
 	
