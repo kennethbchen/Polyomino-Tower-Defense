@@ -8,10 +8,18 @@ signal queue_display_selected()
 
 # Automatically connects QueueDisplay to BlockQueueHandler signal
 func _ready():	
-	for child in get_children():
+	find_queue_displays(self)
+		
+
+func find_queue_displays(node):
+	for child in node.get_children():
 		if child is QueueDisplay:
 			displays.append(child)
 			queue_handler.connect("queue_changed", child, "_on_queue_changed")
+			continue
+		
+		if child.get_child_count() != 0:
+			find_queue_displays(child)
 	
 func _on_tower_affordability_changed(can_afford):
 
