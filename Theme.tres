@@ -1,10 +1,11 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=15 format=2]
 
 [ext_resource path="res://Sprites/Aseprite/Sprites_Slices/UI9-Slice.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/base_dynamic_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Sprites/Aseprite/Sprites_Slices/ButtonHover.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Aseprite/Sprites_Slices/ButtonNormal.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Aseprite/Sprites_Slices/ButtonPressed.png" type="Texture" id=5]
+[ext_resource path="res://Fonts/base_dynamic_font_small.tres" type="DynamicFont" id=6]
 
 [sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 3 )
@@ -54,11 +55,34 @@ margin_right = 2.30192
 margin_top = 2.0
 margin_bottom = 2.0
 
+[sub_resource type="StyleBoxTexture" id=8]
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 32, 32 )
+margin_left = 2.0
+margin_right = 2.0
+margin_top = 2.0
+margin_bottom = 2.0
+expand_margin_top = 24.0
+
 [resource]
 default_font = ExtResource( 2 )
 Button/styles/hover = SubResource( 3 )
 Button/styles/normal = SubResource( 4 )
 Button/styles/pressed = SubResource( 5 )
+ButtonSmall/base_type = "Button"
+ButtonSmall/fonts/font = ExtResource( 6 )
+ButtonSmall/styles/hover = SubResource( 3 )
+ButtonSmall/styles/normal = SubResource( 4 )
+ButtonSmall/styles/pressed = SubResource( 5 )
+LabelSmall/base_type = "Label"
+LabelSmall/fonts/font = ExtResource( 6 )
 Panel/styles/panel = SubResource( 1 )
 PopupDialog/styles/panel = SubResource( 2 )
 PopupPanel/styles/panel = SubResource( 6 )
+TabContainer/styles/panel = SubResource( 8 )
+WindowDialog/colors/title_color = Color( 1, 1, 1, 1 )
+WindowDialog/constants/close_h_ofs = 24
+WindowDialog/constants/close_v_ofs = 16
+WindowDialog/styles/panel = SubResource( 7 )
