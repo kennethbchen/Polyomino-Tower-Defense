@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Theme.tres" type="Theme" id=1]
 [ext_resource path="res://Scripts/TitleScreen.gd" type="Script" id=2]
 [ext_resource path="res://Tileset_Cosmetic.tres" type="TileSet" id=3]
+[ext_resource path="res://Sprites/Aseprite/Logo/Logo-Transparent.png" type="Texture" id=4]
 
 [node name="Title" type="Control"]
 anchor_right = 1.0
@@ -23,9 +24,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -150.0
-margin_top = -54.0
+margin_top = 65.0
 margin_right = 150.0
-margin_bottom = 54.0
+margin_bottom = 173.0
 
 [node name="StartButton" type="Button" parent="Control"]
 margin_left = 87.0
@@ -44,6 +45,19 @@ margin_top = 70.0
 margin_right = 300.0
 margin_bottom = 108.0
 text = "How To Play (Opens Browser)"
+
+[node name="Logo" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -165.0
+margin_top = -266.0
+margin_right = 485.0
+margin_bottom = 234.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+expand = true
 
 [connection signal="pressed" from="Control/StartButton" to="." method="_on_start_game"]
 [connection signal="pressed" from="Control/InstructionsButton" to="." method="_on_how_to_play"]
