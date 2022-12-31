@@ -353,7 +353,7 @@ func _unhandled_input(event):
 		if event.is_action_pressed("game_toggle_delete_mode"): toggle_delete_mode()		
 			
 	# Debug Stuff
-	if event is InputEventKey:
+	if OS.is_debug_build() and event is InputEventKey:
 		
 		if !event.pressed: return
 		
