@@ -40,6 +40,7 @@ func _ready():
 	emit_signal("wave_status_changed", "Click \"Send Next Wave\" to begin")
 	
 func _process(delta):
+	print(enemies_alive)
 	pass
 
 func _increment_spawn_parameters():

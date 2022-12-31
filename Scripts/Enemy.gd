@@ -21,6 +21,8 @@ var destination: Vector2
 
 var rand = RandomNumberGenerator.new()
 
+var alive = true
+
 signal health_changed(current_health, max_health)
 signal sound_played(sound)
 
@@ -63,7 +65,11 @@ func take_damage(damage):
 	
 	health = max(0, health - damage)
 	
-	if health <= 0:
+	if health <= 0 and alive:
+		# Use alive to prevent an being flagged for destruction
+		# multiple times if multiple projectiles hit it before it dies
+		
+		alive = false
 		_destroy(true)
 		
 	
