@@ -101,7 +101,6 @@ func _destroy(killed=false):
 	queue_free()
 
 func _on_velocity_computed(safe_velocity: Vector2):
-	print(safe_velocity)
 	move_and_slide(safe_velocity)
 
 
