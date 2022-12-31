@@ -36,7 +36,6 @@ offset = Vector2( 0, -8 )
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 4.0
 path_max_distance = 50.0
-avoidance_enabled = true
 radius = 0.5
 neighbor_dist = 5.0
 max_neighbors = 5

@@ -50,8 +50,12 @@ func set_stats(new_health = -1, new_speed = -1):
 
 func _physics_process(delta):
 	
+	move_and_slide(global_position.direction_to(nav_agent.get_next_location()) * speed)
+	
 	# Set velocity eventually emits the velocity_comptued signal
-	nav_agent.set_velocity(global_position.direction_to(nav_agent.get_next_location()) * speed)
+	# Using this method requires avoidance to be enabled in the NavigationAgent2D.
+	# However, this is too performance intensive for the game if it runs in HTML5
+	#nav_agent.set_velocity(global_position.direction_to(nav_agent.get_next_location()) * speed)
 
 func take_damage(damage):
 	
@@ -91,6 +95,7 @@ func _destroy(killed=false):
 	queue_free()
 
 func _on_velocity_computed(safe_velocity: Vector2):
+	print(safe_velocity)
 	move_and_slide(safe_velocity)
 
 
