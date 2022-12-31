@@ -79,7 +79,9 @@ func send_wave():
 	# Start Spawning Enemies
 	enemies_to_spawn += enemies_per_round
 	enemies_alive += enemies_per_round
-	spawn_timer.start(spawn_delay)
+	
+	if spawn_timer.is_stopped():
+		spawn_timer.start(spawn_delay)
 	
 	emit_signal("wave_count_changed", wave_count_message % wave_count)	
 	emit_signal("wave_status_changed", "Wave " + str(wave_count) + " active...")
