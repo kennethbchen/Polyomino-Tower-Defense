@@ -44,7 +44,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Polyomino Tower Defense"
+config/name="TetraTD"
 run/main_scene="res://TitleScreen.tscn"
 config/icon="res://Sprites/Aseprite/Logo/Logo-Transparent.png"
 
