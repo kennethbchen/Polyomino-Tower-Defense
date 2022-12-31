@@ -6,6 +6,8 @@ var cell_offset = Vector2(cell_size / 2, cell_size / 2)
 
 onready var camera = $Camera2D
 
+onready var cursor_layer = $CursorLayer
+
 onready var cursor = $CursorLayer/Cursor
 
 onready var board = $BoardData
@@ -446,7 +448,7 @@ func _change_money(amount):
 		
 func _create_floating_text(message):
 	var new_text = floating_text.instance()
-	add_child(new_text)
+	cursor_layer.add_child(new_text)
 	new_text.init(message, get_quantized_cursor_pos() + cell_offset + Vector2(0, -20))
 
 # Returns tilemap coordinates
